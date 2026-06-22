@@ -9,8 +9,8 @@ import type { Metadata } from 'next';
 
 // 🚀 NICHE SEO METADATA
 export const metadata: Metadata = {
-  title: 'Free Visual Class Schedule Maker | Timetable Creator',
-  description: 'The ultimate visual class schedule maker. Color-code, visually build, customize, and download your class timetable for school, college, or university.',
+  title: 'Free Class Schedule Maker — Visual Class Schedule Builder Online',
+  description: 'Create your class schedule online for free. Visual class schedule maker and builder — perfect for students and teachers.',
   keywords: 'visual class schedule maker, visual timetable maker, class schedule creator, free class schedule maker, university timetable creator',
   alternates: {
     canonical: 'https://freeschedulemaker.com/visual-class-schedule-maker',
@@ -39,10 +39,10 @@ export default function VisualClassSchedulePage() {
             #1 Free Visual Timetable Creator
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6 leading-tight">
-            The Ultimate <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600">Visual Class Schedule Maker</span>
+            Free Class Schedule Maker &amp; Builder
           </h1>
           <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-            Discover the easiest way to organize your classes. Color-code, arrange, and build a beautiful <strong>visual class schedule maker</strong> for school or university. Completely free, no signup needed.
+            Discover the easiest way to organize your classes. Color-code, arrange, and build a beautiful <strong>visual class schedule maker</strong> for school or university. Use it to make class schedule online or create class schedule online completely free, no signup needed.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 mb-6">
             <Link 
@@ -85,8 +85,8 @@ export default function VisualClassSchedulePage() {
       <section className="py-20 px-6 bg-slate-50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Craft Your Timetable in Four Easy Steps</h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">Use our schedule maker to visually create daily and weekly timetables perfectly tailored for any purpose. A more organized day is a more productive day.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Create a Class Schedule Online — Free &amp; Instant</h2>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">Use our visual schedule builder — free online to visually create daily and weekly timetables perfectly tailored for any purpose. A more organized day is a more productive day.</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -129,7 +129,7 @@ export default function VisualClassSchedulePage() {
       <section className="py-20 px-6 bg-white border-y border-slate-200">
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-16">
           <div className="flex-1 space-y-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Intuitive Visual Planning Designed for Everyone</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Class Schedule Generator for Students</h2>
             
             <div className="space-y-6">
               <div className="flex gap-4">
@@ -182,8 +182,8 @@ export default function VisualClassSchedulePage() {
       <section className="py-20 px-6 bg-slate-50">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">Frequently Asked Questions</h2>
-            <p className="text-slate-600">Everything you need to know about our free timetable generator.</p>
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">Class Timetable Maker — No Login Needed</h2>
+            <p className="text-slate-600">Everything you need to know about our fast class schedule generator online and class calendar maker.</p>
           </div>
 
           <div className="space-y-4">

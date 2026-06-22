@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://freeschedulemaker.com'),
+  alternates: {
+    canonical: 'https://freeschedulemaker.com',
+  },
   title: {
     default: 'Free Schedule Maker & Calendar Creator | FreeScheduleMaker',
     template: '%s | FreeScheduleMaker',

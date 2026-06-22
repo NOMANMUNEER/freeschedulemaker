@@ -9,9 +9,9 @@ import type { Metadata } from 'next';
 
 // 🚀 NICHE SEO METADATA
 export const metadata: Metadata = {
-  title: 'Free University Timetable Creator | College Schedule Maker',
-  description: 'The ultimate free university timetable creator. Visually build, color-code, and download your college class schedule for the upcoming semester.',
-  keywords: 'university timetable creator, college schedule maker, visual class schedule maker, free timetable maker, student organizer app, university schedule generator',
+  title: 'Free College Schedule Maker & University Timetable Creator Online',
+  description: 'Make your college class schedule or university timetable for free online. Best free college schedule maker — no signup, instant results.',
+  keywords: 'college schedule maker free online, online college schedule maker, college schedule creator, course schedule maker, course calendar maker',
   alternates: {
     canonical: 'https://freeschedulemaker.com/university-timetable-creator',
   },
@@ -39,10 +39,10 @@ export default function UniversityTimetablePage() {
             #1 Free Tool for College Students
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6 leading-tight">
-            The Ultimate <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600">University Timetable Creator</span>
+            Free College Schedule Maker
           </h1>
           <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-            Discover the easiest way to organize your semester. Visually map out your lectures, labs, and study sessions with our free <strong>university timetable creator</strong> and class schedule maker.
+            Discover the easiest way to organize your semester. Visually map out your lectures, labs, and study sessions with our free <strong>university timetable creator online</strong>. A fast online college schedule maker and course calendar maker.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 mb-6">
             <Link 
@@ -85,8 +85,8 @@ export default function UniversityTimetablePage() {
       <section className="py-20 px-6 bg-slate-50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Craft Your Timetable in Four Easy Steps</h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">Use our schedule maker to create daily and weekly timetables perfectly tailored for your college classes. A more organized day is a more productive day.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">University Timetable Creator — Free &amp; Online</h2>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">Use our college schedule creator to generate daily and weekly timetables perfectly tailored for your college classes. A great free college calendar maker for students.</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -129,7 +129,7 @@ export default function UniversityTimetablePage() {
       <section className="py-20 px-6 bg-white border-y border-slate-200">
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-16">
           <div className="flex-1 space-y-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Intuitive Planning Designed for Students</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Build Your College Class Schedule in Minutes</h2>
             
             <div className="space-y-6">
               <div className="flex gap-4">
@@ -182,7 +182,7 @@ export default function UniversityTimetablePage() {
       <section className="py-20 px-6 bg-slate-50">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">Frequently Asked Questions</h2>
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">Free College Calendar Maker for Students</h2>
             <p className="text-slate-600">Everything you need to know about our free university timetable generator.</p>
           </div>
 

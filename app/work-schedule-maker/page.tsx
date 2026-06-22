@@ -7,44 +7,28 @@ import {
 } from 'lucide-react';
 import type { Metadata } from 'next';
 
-// 🚀 AGGRESSIVE SEO METADATA BASED ON 50K SEARCH VOLUME
+// 🚀 NICHE SEO METADATA
 export const metadata: Metadata = {
-  title: 'Free Online Schedule Maker — Create Schedules Instantly | freeschedulemaker.com',
-  description: 'Build any schedule online for free. Weekly planner, class timetable, work roster — no login needed. Fast, easy schedule creator & generator.',
-  keywords: 'schedule maker, free schedule maker, calendar maker, timetable maker, weekly calendar creator free, virtual schedule maker, visual class schedule maker, university timetable creator',
-  openGraph: {
-    title: 'Free Online Schedule Maker — freeschedulemaker.com',
-    description: 'Create any schedule free online. No login. Instant results.',
-    type: 'website',
-    url: 'https://freeschedulemaker.com',
-    images: ['/og-image.png'],
+  title: 'Free Work Schedule Maker & Generator Online',
+  description: 'Create your work schedule online for free. Work schedule maker and builder — perfect for shift planning and team rosters.',
+  keywords: 'work schedule generator online free, work schedule builder free, work schedule creator online, make work schedule online free, online work schedule maker',
+  alternates: {
+    canonical: 'https://freeschedulemaker.com/work-schedule-maker',
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Free Online Schedule Maker — freeschedulemaker.com',
-    description: 'Create any schedule free online. No login. Instant results.',
+  openGraph: {
+    title: 'Free Work Schedule Maker',
+    description: 'Build, personalize, and export your custom work schedule in seconds. 100% Free.',
+    type: 'website',
+    url: 'https://freeschedulemaker.com/work-schedule-maker',
+    images: ['/og-image.png'],
   }
 };
 
-export default function SEOLandingPage() {
+export default function WorkSchedulePage() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebApplication",
-            "name": "Free Schedule Maker",
-            "description": "Free online schedule maker and builder",
-            "applicationCategory": "ProductivityApplication",
-            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-            "operatingSystem": "Web"
-          })
-        }}
-      />
       
-      {/* 🌟 HERO SECTION - Injecting 50k volume keywords */}
+      {/* 🌟 HERO SECTION */}
       <header className="bg-white border-b border-slate-200 pt-24 pb-20 px-6 text-center relative overflow-hidden">
         <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-indigo-50 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
         <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-blue-50 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
@@ -52,13 +36,13 @@ export default function SEOLandingPage() {
         <div className="max-w-4xl mx-auto relative z-10">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-50 text-indigo-700 font-bold text-sm mb-6 border border-indigo-100 shadow-sm">
             <Star className="h-4 w-4 fill-indigo-600 text-indigo-600" />
-            #1 Free Weekly Calendar Creator
+            #1 Free Work Schedule Generator
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6 leading-tight">
-            Free Online Schedule Maker
+            Free Work Schedule Maker
           </h1>
           <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-            The fastest free online schedule maker. Create a weekly schedule, class timetable, or work roster in minutes — no account required. Your free schedule builder is ready.
+            Discover the easiest way to organize your shifts. Color-code, arrange, and build a beautiful roster with our <strong>work schedule generator online free</strong>. A versatile online work schedule maker completely free, no signup needed.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 mb-6">
             <Link 
@@ -76,17 +60,18 @@ export default function SEOLandingPage() {
         </div>
       </header>
 
-      {/* 🚀 LONG-TAIL KEYWORD TAGS (Targeting your new CSV data) */}
+      {/* 🚀 LONG-TAIL KEYWORD TAGS */}
       <section className="py-8 bg-indigo-900 border-y border-indigo-800">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-wrap justify-center gap-3">
             {[
-              'schedule planner online', 
-              'calendar schedule maker', 
-              'weekly schedule creator', 
-              'easy schedule maker', 
-              'free schedule generator', 
-              'free schedule builder'
+              'Visual Class Schedule Maker', 
+              'Visual Timetable Creator', 
+              'Virtual Schedule Maker', 
+              'Class Schedule Planner', 
+              'High School Block Schedule', 
+              'Weekly Calendar Creator Free', 
+              'Color Coded Schedule Maker'
             ].map((tag) => (
               <span key={tag} className="px-4 py-2 bg-indigo-800/50 text-indigo-100 text-sm font-medium rounded-lg border border-indigo-700/50 hover:bg-indigo-700 transition cursor-default">
                 {tag}
@@ -100,8 +85,8 @@ export default function SEOLandingPage() {
       <section className="py-20 px-6 bg-slate-50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">How to Create a Schedule Online</h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">Use our free schedule builder to create daily and weekly timetables perfectly tailored for any purpose. A more organized day is a more productive day.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Make Work Schedule Online Free</h2>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">Use our work schedule builder free to visually create daily and weekly timetables perfectly tailored for any purpose. A more organized team is a more productive team.</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -126,7 +111,7 @@ export default function SEOLandingPage() {
                 <Palette className="h-6 w-6" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-3">3. Personalize</h3>
-              <p className="text-slate-600 leading-relaxed">Express your style with a spectrum of beautiful color palettes, custom fonts, and text alignments to make your timetable truly yours.</p>
+              <p className="text-slate-600 leading-relaxed">Express your style with a spectrum of beautiful color palettes, custom fonts, and text alignments to make your visual timetable truly yours.</p>
             </div>
 
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 relative pt-12">
@@ -144,7 +129,7 @@ export default function SEOLandingPage() {
       <section className="py-20 px-6 bg-white border-y border-slate-200">
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-16">
           <div className="flex-1 space-y-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Build Your Weekly Schedule in Minutes</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Work Schedule Creator Online</h2>
             
             <div className="space-y-6">
               <div className="flex gap-4">
@@ -179,7 +164,7 @@ export default function SEOLandingPage() {
                 {[...Array(5)].map((_, i) => <Star key={i} className="h-5 w-5 fill-amber-400 text-amber-400" />)}
               </div>
               <p className="text-slate-700 italic mb-6 leading-relaxed">
-                Since I started using this free schedule maker, I have more peace of mind. I know all my tasks, classes, and shifts are fully organized, and I can download it instantly.
+                Since I started using this visual class schedule maker, I have more peace of mind. I know all my tasks, classes, and shifts are fully organized, and I can download it instantly.
               </p>
               <div className="flex items-center gap-3">
                 <div className="h-10 w-10 bg-indigo-100 rounded-full flex items-center justify-center font-bold text-indigo-700">RA</div>
@@ -193,12 +178,12 @@ export default function SEOLandingPage() {
         </div>
       </section>
 
-      {/* ❓ FAQ SECTION - Critical for Google Rich Snippets */}
+      {/* ❓ FAQ SECTION */}
       <section className="py-20 px-6 bg-slate-50">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">Your Free Schedule Creator — No Sign-Up</h2>
-            <p className="text-slate-600">Everything you need to know about our free schedule generator.</p>
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">Work Schedule Generator Online Free</h2>
+            <p className="text-slate-600">Everything you need to know about our fast online work schedule maker.</p>
           </div>
 
           <div className="space-y-4">

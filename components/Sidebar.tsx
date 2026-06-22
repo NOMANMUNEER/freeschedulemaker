@@ -51,7 +51,7 @@ export default function Sidebar() {
               <Calendar className="h-6 w-6 text-indigo-600" />
               <h1 className="text-xl font-bold tracking-tight text-slate-800">ScheduleBuilder</h1>
             </div>
-            <button onClick={() => setIsSettingsOpen(true)} className="p-2 text-slate-500 hover:bg-slate-100 rounded-lg transition" title="Settings">
+            <button onClick={() => setIsSettingsOpen(true)} className="p-2 text-slate-500 hover:bg-slate-100 rounded-lg transition" title="Customize Your Schedule">
               <Settings className="h-5 w-5" />
             </button>
           </div>
@@ -59,9 +59,10 @@ export default function Sidebar() {
           {/* Trigger Button to Open Add Event Modal */}
           <button 
             onClick={() => setIsAddEventOpen(true)}
+            title="Free automatic schedule generator"
             className="w-full flex items-center justify-center gap-2 bg-indigo-600 text-white font-medium py-2.5 px-4 rounded-lg hover:bg-indigo-700 transition mb-4 shadow-sm"
           >
-            <Plus className="h-4 w-4" /> Add Course / Event
+            <Plus className="h-4 w-4" /> Create Schedule
           </button>
 
           {/* Active items list loop */}
@@ -102,7 +103,7 @@ export default function Sidebar() {
               </>
             ) : (
               <>
-                <Download className="h-4 w-4" /> Export as PNG
+                <Download className="h-4 w-4" /> Download Free Printable Schedule
               </>
             )}
           </button>
