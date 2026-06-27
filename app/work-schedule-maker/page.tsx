@@ -9,15 +9,15 @@ import type { Metadata } from 'next';
 
 // 🚀 NICHE SEO METADATA
 export const metadata: Metadata = {
-  title: 'Free Work Schedule Maker & Generator Online',
-  description: 'Create your work schedule online for free. Work schedule maker and builder — perfect for shift planning and team rosters.',
-  keywords: 'work schedule generator online free, work schedule builder free, work schedule creator online, make work schedule online free, online work schedule maker',
+  title: 'Free Work Schedule Generator Online | Employee Schedule Creator',
+  description: 'Manage your team with our work schedule generator online free. The perfect schedule generator for employees and managers. Build your roster today.',
+  keywords: 'work schedule generator online free, schedule generator for employees, work schedule creator, work schedule builder free, make work schedule online free',
   alternates: {
     canonical: 'https://freeschedulemaker.com/work-schedule-maker',
   },
   openGraph: {
-    title: 'Free Work Schedule Maker',
-    description: 'Build, personalize, and export your custom work schedule in seconds. 100% Free.',
+    title: 'Free Work Schedule Generator Online | Employee Schedule Creator',
+    description: 'Manage your team with our work schedule generator online free. The perfect schedule generator for employees and managers. Build your roster today.',
     type: 'website',
     url: 'https://freeschedulemaker.com/work-schedule-maker',
     images: ['/og-image.png'],
@@ -39,7 +39,7 @@ export default function WorkSchedulePage() {
             #1 Free Work Schedule Generator
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6 leading-tight">
-            Free Work Schedule Maker
+            Work Schedule Generator Online (Free)
           </h1>
           <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
             Discover the easiest way to organize your shifts. Color-code, arrange, and build a beautiful roster with our <strong>work schedule generator online free</strong>. A versatile online work schedule maker completely free, no signup needed.
@@ -129,7 +129,7 @@ export default function WorkSchedulePage() {
       <section className="py-20 px-6 bg-white border-y border-slate-200">
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-16">
           <div className="flex-1 space-y-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Work Schedule Creator Online</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">The Best Schedule Generator for Employees</h2>
             
             <div className="space-y-6">
               <div className="flex gap-4">

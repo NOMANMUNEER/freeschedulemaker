@@ -9,15 +9,15 @@ import type { Metadata } from 'next';
 
 // 🚀 NICHE SEO METADATA
 export const metadata: Metadata = {
-  title: 'Free Timetable Maker & Generator Online',
-  description: 'Create your timetable online for free. Timetable maker and creator — perfect for students, teachers, and professionals.',
-  keywords: 'timetable maker, free timetable maker, timetable maker online free, online timetable maker, timetable generator free, timetable creator',
+  title: 'Free Timetable Maker | Timetable Creator Online Free',
+  description: 'Generate timetables online easily. Our free timetable maker allows you to build custom schedules in minutes. Try the best timetable creator online free.',
+  keywords: 'timetable creator online free, timetable maker free, generate timetable online, timetable maker, free timetable maker, online timetable maker',
   alternates: {
     canonical: 'https://freeschedulemaker.com/timetable-maker',
   },
   openGraph: {
-    title: 'Free Timetable Maker',
-    description: 'Build, personalize, and export your custom timetable in seconds. 100% Free.',
+    title: 'Free Timetable Maker | Timetable Creator Online Free',
+    description: 'Generate timetables online easily. Our free timetable maker allows you to build custom schedules in minutes. Try the best timetable creator online free.',
     type: 'website',
     url: 'https://freeschedulemaker.com/timetable-maker',
     images: ['/og-image.png'],
@@ -39,7 +39,7 @@ export default function TimetableMakerPage() {
             #1 Free Timetable Creator
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6 leading-tight">
-            Free Timetable Maker
+            Free Timetable Maker & Online Creator
           </h1>
           <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
             Discover the easiest way to organize your time. Color-code, arrange, and build a beautiful schedule with our <strong>timetable maker online free</strong>. A versatile timetable generator free to use, no signup needed.
@@ -85,7 +85,7 @@ export default function TimetableMakerPage() {
       <section className="py-20 px-6 bg-slate-50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Online Timetable Maker — Free &amp; Instant</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">How to Generate Your Timetable Online</h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">Use our free timetable maker to visually create daily and weekly timetables perfectly tailored for any purpose. A more organized day is a more productive day.</p>
           </div>
 

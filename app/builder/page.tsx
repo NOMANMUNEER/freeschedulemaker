@@ -12,7 +12,7 @@ export default function BuilderPage() {
 
       {/* Main Timetable View Area */}
       <main className="flex-1 p-8 overflow-y-auto flex flex-col">
-        <h1 className="sr-only">Free Schedule Builder &amp; Generator</h1>
+        <h1 className="sr-only">Automatic Schedule Generator Online</h1>
         <div className="flex-1">
           <ScheduleGrid />
         </div>

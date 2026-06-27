@@ -9,20 +9,20 @@ import type { Metadata } from 'next';
 
 // 🚀 AGGRESSIVE SEO METADATA BASED ON 50K SEARCH VOLUME
 export const metadata: Metadata = {
-  title: 'Free Online Schedule Maker — Create Schedules Instantly | freeschedulemaker.com',
-  description: 'Build any schedule online for free. Weekly planner, class timetable, work roster — no login needed. Fast, easy schedule creator & generator.',
-  keywords: 'schedule maker, free schedule maker, calendar maker, timetable maker, weekly calendar creator free, virtual schedule maker, visual class schedule maker, university timetable creator',
+  title: 'Free Online Schedule Creator | Build Your Schedule for Free',
+  description: 'Use our free online schedule builder to create perfect daily, weekly, or shift schedules in minutes. The easiest schedule creator free of charge.',
+  keywords: 'schedule creator free, online schedule creator, free online schedule builder, schedule maker, free schedule maker, calendar maker',
   openGraph: {
-    title: 'Free Online Schedule Maker — freeschedulemaker.com',
-    description: 'Create any schedule free online. No login. Instant results.',
+    title: 'Free Online Schedule Creator — freeschedulemaker.com',
+    description: 'Use our free online schedule builder to create perfect daily, weekly, or shift schedules in minutes.',
     type: 'website',
     url: 'https://freeschedulemaker.com',
     images: ['/og-image.png'],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Free Online Schedule Maker — freeschedulemaker.com',
-    description: 'Create any schedule free online. No login. Instant results.',
+    title: 'Free Online Schedule Creator — freeschedulemaker.com',
+    description: 'Use our free online schedule builder to create perfect daily, weekly, or shift schedules in minutes.',
   }
 };
 
@@ -55,7 +55,7 @@ export default function SEOLandingPage() {
             #1 Free Weekly Calendar Creator
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6 leading-tight">
-            Free Online Schedule Maker
+            Free Online Schedule Creator
           </h1>
           <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
             The fastest free online schedule maker. Create a weekly schedule, class timetable, or work roster in minutes — no account required. Your free schedule builder is ready.
@@ -144,7 +144,7 @@ export default function SEOLandingPage() {
       <section className="py-20 px-6 bg-white border-y border-slate-200">
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-16">
           <div className="flex-1 space-y-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Build Your Weekly Schedule in Minutes</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Why Use Our Free Online Schedule Builder?</h2>
             
             <div className="space-y-6">
               <div className="flex gap-4">

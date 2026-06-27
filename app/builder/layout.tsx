@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Schedule Builder — Free Online Schedule Generator | freeschedulemaker.com',
-  description: 'Use our free schedule builder and generator online. Drag, drop, customize — create class schedules, work rosters, and weekly timetables.',
+  title: 'Automatic Schedule Generator Online | Free Builder',
+  description: 'Start building immediately with our free automatic schedule generator online. Add events, customize colors, and export in one click.',
 };
 
 export default function BuilderLayout({

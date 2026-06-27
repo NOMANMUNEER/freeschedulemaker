@@ -9,15 +9,15 @@ import type { Metadata } from 'next';
 
 // 🚀 NICHE SEO METADATA
 export const metadata: Metadata = {
-  title: 'Free Weekly Schedule Maker Online — Build Your Week',
-  description: 'Create your weekly schedule online for free. Weekly schedule maker and builder — perfect for planning your entire week effortlessly.',
-  keywords: 'weekly schedule maker, weekly schedule maker online free, weekly schedule creator, weekly timetable maker, make a weekly schedule, weekly schedule builder',
+  title: 'Weekly Schedule Creator | Free Weekly Generator',
+  description: 'Plan your week perfectly using our weekly schedule creator. Generate a custom weekly routine and stay organized.',
+  keywords: 'weekly schedule creator, weekly schedule generator, weekly schedule maker, weekly schedule maker online free, weekly timetable maker, make a weekly schedule',
   alternates: {
     canonical: 'https://freeschedulemaker.com/weekly-schedule-maker',
   },
   openGraph: {
-    title: 'Free Weekly Schedule Maker',
-    description: 'Build, personalize, and export your custom weekly schedule in seconds. 100% Free.',
+    title: 'Weekly Schedule Creator | Free Weekly Generator',
+    description: 'Plan your week perfectly using our weekly schedule creator. Generate a custom weekly routine and stay organized.',
     type: 'website',
     url: 'https://freeschedulemaker.com/weekly-schedule-maker',
     images: ['/og-image.png'],
@@ -39,7 +39,7 @@ export default function WeeklySchedulePage() {
             #1 Free Weekly Timetable Creator
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6 leading-tight">
-            Free Weekly Schedule Maker
+            Free Weekly Schedule Creator
           </h1>
           <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
             Discover the easiest way to organize your week. Color-code, arrange, and build a beautiful plan with our <strong>weekly schedule maker online free</strong>. A versatile weekly timetable maker completely free, no signup needed.

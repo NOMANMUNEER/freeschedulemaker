@@ -9,15 +9,15 @@ import type { Metadata } from 'next';
 
 // 🚀 NICHE SEO METADATA
 export const metadata: Metadata = {
-  title: 'Free College Schedule Maker & University Timetable Creator Online',
-  description: 'Make your college class schedule or university timetable for free online. Best free college schedule maker — no signup, instant results.',
-  keywords: 'college schedule maker free online, online college schedule maker, college schedule creator, course schedule maker, course calendar maker',
+  title: 'Class Schedule Creator | Free University Timetable Builder',
+  description: 'Plan your semester with our free class schedule creator. Generate the perfect university timetable and organize your academic life easily.',
+  keywords: 'class schedule creator, class schedule builder free, class timetable creator, university schedule creator, college schedule maker free online',
   alternates: {
     canonical: 'https://freeschedulemaker.com/university-timetable-creator',
   },
   openGraph: {
-    title: 'Free University Timetable Creator',
-    description: 'Build, personalize, and export your custom college schedule in seconds. 100% Free.',
+    title: 'Class Schedule Creator | Free University Timetable Builder',
+    description: 'Plan your semester with our free class schedule creator. Generate the perfect university timetable and organize your academic life easily.',
     type: 'website',
     url: 'https://freeschedulemaker.com/university-timetable-creator',
     images: ['/og-image.png'],
@@ -39,7 +39,7 @@ export default function UniversityTimetablePage() {
             #1 Free Tool for College Students
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6 leading-tight">
-            Free College Schedule Maker
+            University & Class Schedule Creator
           </h1>
           <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
             Discover the easiest way to organize your semester. Visually map out your lectures, labs, and study sessions with our free <strong>university timetable creator online</strong>. A fast online college schedule maker and course calendar maker.
@@ -129,7 +129,7 @@ export default function UniversityTimetablePage() {
       <section className="py-20 px-6 bg-white border-y border-slate-200">
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-16">
           <div className="flex-1 space-y-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Build Your College Class Schedule in Minutes</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Build Your Perfect Class Timetable</h2>
             
             <div className="space-y-6">
               <div className="flex gap-4">
