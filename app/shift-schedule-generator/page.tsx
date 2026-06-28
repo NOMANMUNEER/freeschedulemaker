@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 
 export default function ShiftScheduleGeneratorPage() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100">
+    <main className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100">
       
       {/* 🌟 HERO SECTION */}
       <header className="bg-white border-b border-slate-200 pt-24 pb-20 px-6 text-center relative overflow-hidden">
@@ -135,21 +135,21 @@ export default function ShiftScheduleGeneratorPage() {
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><CheckCircle className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">Better Than Excel</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">Better Than Excel</h3>
                   <p className="text-slate-600">Stop fighting with merged cells and row heights. Our free shift schedule generator excel alternative automatically calculates overlaps and formats everything beautifully.</p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><RefreshCcw className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">Supports Rotating Shifts</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">Supports Rotating Shifts</h3>
                   <p className="text-slate-600">Easily manage complex rotating shift patterns or varying days off. Just click to copy shifts across multiple days effortlessly.</p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><CheckCircle className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">No Accounts Needed</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">No Accounts Needed</h3>
                   <p className="text-slate-600">Your employees don't need to download a specialized app or create accounts just to see when they work. You just send them the image file.</p>
                 </div>
               </div>
@@ -244,6 +244,6 @@ export default function ShiftScheduleGeneratorPage() {
           <p>© {new Date().getFullYear()} ScheduleBuilder. The best free employee shift schedule generator.</p>
         </div>
       </footer>
-    </div>
+    </main>
   );
 }

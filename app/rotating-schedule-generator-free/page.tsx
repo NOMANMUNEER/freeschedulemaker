@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 
 export default function RotatingScheduleGeneratorFreePage() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100">
+    <main className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100">
       
       {/* 🌟 HERO SECTION */}
       <header className="bg-white border-b border-slate-200 pt-24 pb-20 px-6 text-center relative overflow-hidden">
@@ -135,21 +135,21 @@ export default function RotatingScheduleGeneratorFreePage() {
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><CheckCircle className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">Perfect for 24/7 Operations</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">Perfect for 24/7 Operations</h3>
                   <p className="text-slate-600">Unlike standard calendars, our builder can handle 24-hour grids, making it ideal for hospitals, security firms, and manufacturing floors.</p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><CheckCircle className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">Visual Clarity</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">Visual Clarity</h3>
                   <p className="text-slate-600">Rotating shifts can be confusing. Using distinct color palettes helps employees instantly recognize when they are on duty and when they have a day off.</p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><CheckCircle className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">100% Free to Use</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">100% Free to Use</h3>
                   <p className="text-slate-600">Stop paying monthly subscriptions for overcomplicated workforce management tools. Our shift pattern maker is entirely free.</p>
                 </div>
               </div>
@@ -244,6 +244,6 @@ export default function RotatingScheduleGeneratorFreePage() {
           <p>© {new Date().getFullYear()} ScheduleBuilder. The top rotating schedule generator free.</p>
         </div>
       </footer>
-    </div>
+    </main>
   );
 }

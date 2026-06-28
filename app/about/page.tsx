@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-slate-50 py-20 px-6">
+    <main className="min-h-screen bg-slate-50 py-20 px-6">
       <div className="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-slate-200 text-slate-800 text-center">
         <div className="flex justify-center mb-6">
           <div className="h-16 w-16 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center">
@@ -51,6 +51,6 @@ export default function AboutPage() {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

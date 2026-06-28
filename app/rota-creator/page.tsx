@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 
 export default function RotaCreatorPage() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100">
+    <main className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100">
       
       {/* 🌟 HERO SECTION */}
       <header className="bg-white border-b border-slate-200 pt-24 pb-20 px-6 text-center relative overflow-hidden">
@@ -135,21 +135,21 @@ export default function RotaCreatorPage() {
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><CheckCircle className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">The Ultimate Rota Creator Excel Alternative</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">The Ultimate Rota Creator Excel Alternative</h3>
                   <p className="text-slate-600">Using Excel to build rotas often results in confusing formatting and messed up printing. Our tool auto-formats everything perfectly.</p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><CheckCircle className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">Designed for Shift Work</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">Designed for Shift Work</h3>
                   <p className="text-slate-600">Whether you are running a busy pub, a retail store, or a 24-hour gym, our shift rota generator handles overlapping and irregular hours smoothly.</p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><CheckCircle className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">100% Free Rota Creator</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">100% Free Rota Creator</h3>
                   <p className="text-slate-600">We don't charge per user, per employee, or per location. You can build as many rotas as your business needs for absolutely free.</p>
                 </div>
               </div>
@@ -244,6 +244,6 @@ export default function RotaCreatorPage() {
           <p>© {new Date().getFullYear()} ScheduleBuilder. The number one rota creator free for businesses.</p>
         </div>
       </footer>
-    </div>
+    </main>
   );
 }

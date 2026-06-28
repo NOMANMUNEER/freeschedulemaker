@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 
 export default function SEOLandingPage() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100">
+    <main className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -150,21 +150,21 @@ export default function SEOLandingPage() {
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><CheckCircle className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">Streamlined Scheduling</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">Streamlined Scheduling</h3>
                   <p className="text-slate-600">A clean, minimalist design with intuitive controls that make creating a visual class schedule less of a chore and more of a breeze.</p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><CheckCircle className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">All-In-One Features</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">All-In-One Features</h3>
                   <p className="text-slate-600">Combining the best tools from top calendar making apps, providing community-suggested improvements for maximum efficiency.</p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><CheckCircle className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">Fully Tailored to You</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">Fully Tailored to You</h3>
                   <p className="text-slate-600">Bid farewell to bland schedules. Customize every aspect of your timetable with vibrant colors and stylish text.</p>
                 </div>
               </div>
@@ -259,6 +259,6 @@ export default function SEOLandingPage() {
           <p>© {new Date().getFullYear()} ScheduleBuilder. The ultimate free schedule maker and calendar creator.</p>
         </div>
       </footer>
-    </div>
+    </main>
   );
 }

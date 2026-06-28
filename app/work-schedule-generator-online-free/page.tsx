@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 
 export default function WorkScheduleGeneratorOnlineFreePage() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100">
+    <main className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100">
       
       {/* 🌟 HERO SECTION */}
       <header className="bg-white border-b border-slate-200 pt-24 pb-20 px-6 text-center relative overflow-hidden">
@@ -134,21 +134,21 @@ export default function WorkScheduleGeneratorOnlineFreePage() {
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><CheckCircle className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">Frictionless Generation</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">Frictionless Generation</h3>
                   <p className="text-slate-600">No complex onboarding or tutorials needed. Our generator is designed to get you from a blank canvas to a completed schedule in record time.</p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><CheckCircle className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">Highly Customizable</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">Highly Customizable</h3>
                   <p className="text-slate-600">Whether you need a classic 9-to-5 grid, a 24/7 rotating shift layout, or a split-shift setup, our tool adapts to your business needs.</p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><CheckCircle className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">Completely Free</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">Completely Free</h3>
                   <p className="text-slate-600">Why pay for bulky scheduling software when you only need a simple, visual roster? Enjoy all features completely free.</p>
                 </div>
               </div>
@@ -243,6 +243,6 @@ export default function WorkScheduleGeneratorOnlineFreePage() {
           <p>© {new Date().getFullYear()} ScheduleBuilder. The best free work schedule generator online.</p>
         </div>
       </footer>
-    </div>
+    </main>
   );
 }

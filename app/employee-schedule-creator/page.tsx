@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 
 export default function EmployeeScheduleCreatorPage() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100">
+    <main className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100">
       
       {/* 🌟 HERO SECTION */}
       <header className="bg-white border-b border-slate-200 pt-24 pb-20 px-6 text-center relative overflow-hidden">
@@ -135,21 +135,21 @@ export default function EmployeeScheduleCreatorPage() {
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><CheckCircle className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">Completely Web-Based</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">Completely Web-Based</h3>
                   <p className="text-slate-600">No need to download a heavy app to make employee schedules. Our online employee schedule maker runs right in your browser.</p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><CheckCircle className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">Visual and Automated</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">Visual and Automated</h3>
                   <p className="text-slate-600">This automated employee schedule generator instantly snaps shift blocks into the correct time slots, perfectly aligning everything so you don't have to.</p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><CheckCircle className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">No Login Walls</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">No Login Walls</h3>
                   <p className="text-slate-600">Many tools claim to be an employee schedule generator free, but force you to pay to export. We let you export an unlimited number of schedules totally free.</p>
                 </div>
               </div>
@@ -244,6 +244,6 @@ export default function EmployeeScheduleCreatorPage() {
           <p>© {new Date().getFullYear()} ScheduleBuilder. The top employee schedule creator free.</p>
         </div>
       </footer>
-    </div>
+    </main>
   );
 }

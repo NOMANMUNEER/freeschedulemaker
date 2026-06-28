@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 
 export default function AutomaticScheduleGeneratorOnlinePage() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100">
+    <main className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100">
       
       {/* 🌟 HERO SECTION */}
       <header className="bg-white border-b border-slate-200 pt-24 pb-20 px-6 text-center relative overflow-hidden">
@@ -135,21 +135,21 @@ export default function AutomaticScheduleGeneratorOnlinePage() {
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><Zap className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">Blazing Fast Formatting</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">Blazing Fast Formatting</h3>
                   <p className="text-slate-600">No need to manually align rows and columns like in Excel or Word. Our builder handles all the CSS and layout automatically.</p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><CheckCircle className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">Pixel Perfect Results</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">Pixel Perfect Results</h3>
                   <p className="text-slate-600">Events that overlap or share the same time slot are automatically calculated and displayed side-by-side without breaking the layout.</p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><CheckCircle className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">Cloud-Based & Responsive</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">Cloud-Based & Responsive</h3>
                   <p className="text-slate-600">Because it runs directly in your browser, it automatically works on your desktop, laptop, or tablet without installing anything.</p>
                 </div>
               </div>
@@ -244,6 +244,6 @@ export default function AutomaticScheduleGeneratorOnlinePage() {
           <p>© {new Date().getFullYear()} ScheduleBuilder. The best automatic schedule generator online.</p>
         </div>
       </footer>
-    </div>
+    </main>
   );
 }

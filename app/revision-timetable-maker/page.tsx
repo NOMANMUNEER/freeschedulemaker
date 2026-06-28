@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 
 export default function RevisionTimetableMakerPage() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100">
+    <main className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100">
       
       {/* 🌟 HERO SECTION */}
       <header className="bg-white border-b border-slate-200 pt-24 pb-20 px-6 text-center relative overflow-hidden">
@@ -135,21 +135,21 @@ export default function RevisionTimetableMakerPage() {
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><GraduationCap className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">Tailored for Students</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">Tailored for Students</h3>
                   <p className="text-slate-600">Whether you need an A Level revision timetable maker or a university revision timetable generator, our tool scales to fit your exact academic needs.</p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><CheckCircle className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">Automatic & Easy</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">Automatic & Easy</h3>
                   <p className="text-slate-600">Don't waste an hour making an Excel sheet. As an automatic revision timetable maker, it perfectly aligns your study blocks automatically.</p>
                 </div>
               </div>
               <div className="flex gap-4">
                 <div className="flex-shrink-0 mt-1"><CheckCircle className="h-6 w-6 text-indigo-600" /></div>
                 <div>
-                  <h4 className="text-xl font-bold text-slate-900 mb-1">100% Free & No Signups</h4>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">100% Free & No Signups</h3>
                   <p className="text-slate-600">Students shouldn't have to pay to organize their studying. Our revision schedule maker is completely free and requires no account.</p>
                 </div>
               </div>
@@ -244,6 +244,6 @@ export default function RevisionTimetableMakerPage() {
           <p>© {new Date().getFullYear()} ScheduleBuilder. The best free revision timetable maker online.</p>
         </div>
       </footer>
-    </div>
+    </main>
   );
 }
