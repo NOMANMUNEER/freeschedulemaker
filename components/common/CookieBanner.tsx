@@ -8,7 +8,6 @@ export default function CookieBanner() {
 
   useEffect(() => {
     // Check if the user has already accepted the cookies
-    // We do this inside useEffect to prevent Next.js hydration errors
     const consent = localStorage.getItem('cookieConsent');
     if (!consent) {
       setIsVisible(true);
@@ -34,15 +33,16 @@ export default function CookieBanner() {
         
         <div className="flex flex-col sm:flex-row gap-3 mt-2">
           <button 
+            type="button"
             onClick={handleAccept}
-            className="flex-1 bg-indigo-600 text-white font-bold py-2.5 px-4 rounded-xl hover:bg-indigo-700 transition"
+            className="flex-1 bg-indigo-600 text-white font-bold py-2.5 px-4 rounded-xl hover:bg-indigo-700 transition text-xs cursor-pointer"
           >
             Accept All
           </button>
           <Link 
             href="/privacy-policy" 
             onClick={() => setIsVisible(false)}
-            className="flex-1 flex items-center justify-center bg-slate-100 text-slate-700 font-medium py-2.5 px-4 rounded-xl hover:bg-slate-200 transition"
+            className="flex-1 flex items-center justify-center bg-slate-100 text-slate-700 font-medium py-2.5 px-4 rounded-xl hover:bg-slate-200 transition text-xs cursor-pointer"
           >
             Privacy Policy
           </Link>

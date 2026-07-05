@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useScheduleStore, ScheduleSettings } from '../store/useScheduleStore';
+import { useScheduleStore } from '../../store/useScheduleStore';
+import { ScheduleSettings } from '../../types/schedule';
 import { X, Layout, Clock, Calendar, Type, Sliders } from 'lucide-react';
 
 interface SettingsModalProps {
@@ -35,7 +36,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/40 backdrop-blur-xs">
       <div className="w-[500px] bg-[#eef1f6] rounded-xl shadow-2xl border border-slate-300 overflow-hidden flex flex-col text-slate-800">
         
         {/* Modal Header */}
@@ -83,16 +84,16 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               <div>
                 <label className="block text-xs font-semibold text-slate-600 mb-1.5">Show title</label>
                 <div className="flex border border-slate-300 rounded-md overflow-hidden bg-white">
-                  <button onClick={() => setTempSettings({ ...tempSettings, showTitle: true })} className={`flex-1 py-2 text-center transition ${tempSettings.showTitle ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>Yes</button>
-                  <button onClick={() => setTempSettings({ ...tempSettings, showTitle: false })} className={`flex-1 py-2 text-center border-l border-slate-300 transition ${!tempSettings.showTitle ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>No</button>
+                  <button type="button" onClick={() => setTempSettings({ ...tempSettings, showTitle: true })} className={`flex-1 py-2 text-center transition ${tempSettings.showTitle ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>Yes</button>
+                  <button type="button" onClick={() => setTempSettings({ ...tempSettings, showTitle: false })} className={`flex-1 py-2 text-center border-l border-slate-300 transition ${!tempSettings.showTitle ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>No</button>
                 </div>
               </div>
 
               <div>
                 <label className="block text-xs font-semibold text-slate-600 mb-1.5">First day of week</label>
                 <div className="flex border border-slate-300 rounded-md overflow-hidden bg-white">
-                  <button onClick={() => setTempSettings({ ...tempSettings, firstDayOfWeek: 'Monday' })} className={`flex-1 py-2 text-center transition ${tempSettings.firstDayOfWeek === 'Monday' ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>Monday</button>
-                  <button onClick={() => setTempSettings({ ...tempSettings, firstDayOfWeek: 'Sunday' })} className={`flex-1 py-2 text-center border-l border-slate-300 transition ${tempSettings.firstDayOfWeek === 'Sunday' ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>Sunday</button>
+                  <button type="button" onClick={() => setTempSettings({ ...tempSettings, firstDayOfWeek: 'Monday' })} className={`flex-1 py-2 text-center transition ${tempSettings.firstDayOfWeek === 'Monday' ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>Monday</button>
+                  <button type="button" onClick={() => setTempSettings({ ...tempSettings, firstDayOfWeek: 'Sunday' })} className={`flex-1 py-2 text-center border-l border-slate-300 transition ${tempSettings.firstDayOfWeek === 'Sunday' ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>Sunday</button>
                 </div>
               </div>
 
@@ -105,6 +106,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                     return (
                       <button
                         key={day}
+                        type="button"
                         onClick={() => toggleDay(fullDays[idx])}
                         className={`py-2 text-center border-r border-slate-200 last:border-0 font-medium transition ${isSelected ? 'bg-indigo-50 font-bold text-indigo-900' : 'text-slate-400 bg-slate-50/50 hover:bg-slate-100'}`}
                       >
@@ -119,12 +121,12 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                 <label className="block text-xs font-semibold text-slate-600 mb-1.5">Show dates</label>
                 <div className="flex gap-2 items-center">
                   <div className="flex flex-1 border border-slate-300 rounded-md overflow-hidden bg-white">
-                    <button onClick={() => setTempSettings({ ...tempSettings, showDates: true })} className={`flex-1 py-2 text-center transition ${tempSettings.showDates ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>Yes</button>
-                    <button onClick={() => setTempSettings({ ...tempSettings, showDates: false })} className={`flex-1 py-2 text-center border-l border-slate-300 transition ${!tempSettings.showDates ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>No</button>
+                    <button type="button" onClick={() => setTempSettings({ ...tempSettings, showDates: true })} className={`flex-1 py-2 text-center transition ${tempSettings.showDates ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>Yes</button>
+                    <button type="button" onClick={() => setTempSettings({ ...tempSettings, showDates: false })} className={`flex-1 py-2 text-center border-l border-slate-300 transition ${!tempSettings.showDates ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>No</button>
                   </div>
                   <input 
                     type="text" 
-                    value={tempSettings.activeWeek}
+                    value={tempSettings.activeWeek || ''}
                     onChange={(e) => setTempSettings({ ...tempSettings, activeWeek: e.target.value })}
                     className="border border-slate-300 rounded-md px-3 py-2 bg-white text-sm w-[45%] font-medium text-slate-700 outline-none focus:border-indigo-500"
                   />
@@ -139,8 +141,8 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               <div>
                 <label className="block text-xs font-semibold text-slate-600 mb-1.5">Clock type</label>
                 <div className="flex border border-slate-300 rounded-md overflow-hidden bg-white">
-                  <button onClick={() => setTempSettings({ ...tempSettings, clockType: '12-Hour' })} className={`flex-1 py-2 text-center transition ${tempSettings.clockType === '12-Hour' ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>12-Hour</button>
-                  <button onClick={() => setTempSettings({ ...tempSettings, clockType: '24-Hour' })} className={`flex-1 py-2 text-center border-l border-slate-300 transition ${tempSettings.clockType === '24-Hour' ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>24-Hour</button>
+                  <button type="button" onClick={() => setTempSettings({ ...tempSettings, clockType: '12-Hour' })} className={`flex-1 py-2 text-center transition ${tempSettings.clockType === '12-Hour' ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>12-Hour</button>
+                  <button type="button" onClick={() => setTempSettings({ ...tempSettings, clockType: '24-Hour' })} className={`flex-1 py-2 text-center border-l border-slate-300 transition ${tempSettings.clockType === '24-Hour' ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>24-Hour</button>
                 </div>
               </div>
 
@@ -150,6 +152,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   {[15, 30, 60].map((spacing) => (
                     <button
                       key={spacing}
+                      type="button"
                       onClick={() => setTempSettings({ ...tempSettings, lineSpacing: spacing as any })}
                       className={`flex-1 py-2 text-center border-r last:border-0 border-slate-300 transition ${tempSettings.lineSpacing === spacing ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}
                     >
@@ -191,8 +194,8 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                 <div key={item.key}>
                   <label className="block text-xs font-semibold text-slate-600 mb-1.5">{item.label}</label>
                   <div className="flex border border-slate-300 rounded-md overflow-hidden bg-white">
-                    <button onClick={() => setTempSettings({ ...tempSettings, [item.key]: true })} className={`flex-1 py-2 text-center transition ${(tempSettings as any)[item.key] ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>Yes</button>
-                    <button onClick={() => setTempSettings({ ...tempSettings, [item.key]: false })} className={`flex-1 py-2 text-center border-l border-slate-300 transition {!((tempSettings as any)[item.key]) ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>No</button>
+                    <button type="button" onClick={() => setTempSettings({ ...tempSettings, [item.key]: true })} className={`flex-1 py-2 text-center transition ${(tempSettings as any)[item.key] ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>Yes</button>
+                    <button type="button" onClick={() => setTempSettings({ ...tempSettings, [item.key]: false })} className={`flex-1 py-2 text-center border-l border-slate-300 transition ${!((tempSettings as any)[item.key]) ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>No</button>
                   </div>
                 </div>
               ))}
@@ -235,6 +238,7 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
         {/* Modal Action Trigger Footer */}
         <div className="p-4 border-t border-slate-300 bg-[#eef1f6]">
           <button 
+            type="button"
             onClick={handleUpdate}
             className="w-full py-2.5 bg-[#eef1f6] text-[#1e3a8a] border border-[#1e3a8a]/30 font-bold rounded-lg hover:bg-[#1e3a8a] hover:text-white transition shadow-sm"
           >

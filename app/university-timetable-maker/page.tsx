@@ -1,26 +1,25 @@
 import React from 'react';
-import Header from '../components/common/Header';
-import Footer from '../components/common/Footer';
-import ToolHero from '../components/seo/ToolHero';
-import ScheduleBuilder from '../components/builder/ScheduleBuilder';
-import UseCases from '../components/seo/UseCases';
-import HowItWorks from '../components/seo/HowItWorks';
-import FAQSection from '../components/seo/FAQSection';
-import RelatedTools from '../components/seo/RelatedTools';
-import { generatePageMetadata, generateFAQSchema, generateSoftwareApplicationSchema } from '../lib/generateMetadata';
+import Header from '../../components/common/Header';
+import Footer from '../../components/common/Footer';
+import ToolHero from '../../components/seo/ToolHero';
+import ScheduleBuilder from '../../components/builder/ScheduleBuilder';
+import UseCases from '../../components/seo/UseCases';
+import HowItWorks from '../../components/seo/HowItWorks';
+import FAQSection from '../../components/seo/FAQSection';
+import RelatedTools from '../../components/seo/RelatedTools';
+import { generatePageMetadata, generateFAQSchema, generateSoftwareApplicationSchema } from '../../lib/generateMetadata';
 import type { Metadata } from 'next';
 
-const VARIANT = 'default';
+const VARIANT = 'university';
 
 export const metadata: Metadata = generatePageMetadata(VARIANT);
 
-export default function HomePage() {
+export default function UniversityTimetableMakerPage() {
   const faqSchema = generateFAQSchema(VARIANT);
   const appSchema = generateSoftwareApplicationSchema(VARIANT);
 
   return (
     <main className="min-h-screen flex flex-col bg-slate-50">
-      {/* Structured SEO Schema Injection */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -32,10 +31,7 @@ export default function HomePage() {
 
       <Header />
       <ToolHero variant={VARIANT} />
-      
-      {/* Shared Builder Component */}
       <ScheduleBuilder variant={VARIANT} />
-      
       <UseCases variant={VARIANT} />
       <HowItWorks />
       <FAQSection variant={VARIANT} />

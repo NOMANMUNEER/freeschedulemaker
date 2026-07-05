@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useScheduleStore } from '../store/useScheduleStore';
+import { useScheduleStore } from '../../store/useScheduleStore';
 import EventCard from './EventCard';
 import AddEventModal from './AddEventModal';
 
 export default function ScheduleGrid() {
-  const { events, settings } = useScheduleStore();
+  const { events, settings, currentVariant } = useScheduleStore();
   const { visibleDays, startHour, endHour, clockType } = settings;
 
   // Add state for the grid's modal
@@ -51,18 +51,17 @@ export default function ScheduleGrid() {
   };
 
   return (
-    // 📸 IMPORTANT: Added id="schedule-grid" here so the PNG Export can find it!
-    <div id="schedule-grid" className="max-w-6xl mx-auto bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden relative">
+    <div id="schedule-grid" className="w-full bg-white rounded-xl shadow-xs border border-slate-200 overflow-hidden relative">
       
       {/* Header Row Days */}
       <div 
         style={gridTemplateColumns} 
-        className="grid border-b border-slate-200 bg-slate-100/70 text-center font-semibold text-sm text-slate-600"
+        className="grid border-b border-slate-200 bg-slate-100/70 text-center font-semibold text-sm text-slate-600 select-none"
       >
         <div className="p-4 border-r border-slate-200">Time</div>
         {visibleDays.map((day) => (
-          <div key={day} className="p-4 border-r border-slate-200 last:border-r-0 capitalize">
-            {day.substring(0, 3)} {/* Showing truncated short days like Mon, Tue */}
+          <div key={day} className="p-4 border-r border-slate-200 last:border-r-0 capitalize truncate">
+            {day.substring(0, 3)}
           </div>
         ))}
       </div>
@@ -96,12 +95,14 @@ export default function ScheduleGrid() {
       ))}
 
       {/* Mount the Modal specifically for grid clicks */}
-      <AddEventModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-        initialDay={selectedSlot.day}
-        initialTime={selectedSlot.time}
-      />
+      {isModalOpen && (
+        <AddEventModal 
+          isOpen={isModalOpen} 
+          onClose={() => setIsModalOpen(false)} 
+          initialDay={selectedSlot.day}
+          initialTime={selectedSlot.time}
+        />
+      )}
     </div>
   );
 }
