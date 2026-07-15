@@ -7,12 +7,12 @@ export const metadata: Metadata = {
   title: 'About Us | FreeScheduleMaker',
   description: 'Learn about FreeScheduleMaker — the free online tool for building weekly schedules and timetables.',
   alternates: {
-    canonical: 'https://freeschedulemaker.com/about',
+    canonical: 'https://www.freeschedulemaker.com/about',
   },
   openGraph: {
     title: 'About Us | FreeScheduleMaker',
     description: 'Learn about FreeScheduleMaker.',
-    url: 'https://freeschedulemaker.com/about',
+    url: 'https://www.freeschedulemaker.com/about',
     type: 'website',
   },
 };
@@ -26,14 +26,14 @@ export default function AboutPage() {
             <Users className="h-8 w-8" />
           </div>
         </div>
-        <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">About ScheduleBuilder Online</h1>
+        <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">About FreeScheduleMaker</h1>
         
         <div className="space-y-6 text-slate-600 leading-relaxed text-left">
           <p className="text-lg">Our mission is simple: to provide the easiest, fastest, and most visually appealing <strong>free online schedule maker</strong> on the internet.</p>
           
           <p>Time management is the key to success, whether you are a college student juggling classes, a manager creating an employee shift calendar, or simply someone trying to organize a weekly workout and meal prep routine. However, most scheduling tools require paid subscriptions, mandatory account creation, or are clunky to use.</p>
 
-          <p>We built ScheduleBuilder Online to change that. Our tool is 100% free, requires absolutely no sign-up, and runs entirely in your browser. With a few clicks, you can block out your time, customize your colors, and instantly export a beautiful image of your timetable.</p>
+          <p>We built FreeScheduleMaker to change that. Our tool is 100% free, requires absolutely no sign-up, and runs entirely in your browser. With a few clicks, you can block out your time, customize your colors, and instantly export a beautiful image of your timetable.</p>
 
           <div className="bg-indigo-50 p-6 rounded-xl border border-indigo-100 mt-8 text-center">
             <h3 className="font-bold text-indigo-900 text-lg mb-2">Ready to take control of your time?</h3>

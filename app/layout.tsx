@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://freeschedulemaker.com'),
+  metadataBase: new URL('https://www.freeschedulemaker.com'),
   alternates: {
-    canonical: 'https://freeschedulemaker.com',
+    canonical: 'https://www.freeschedulemaker.com',
   },
   title: {
     default: 'Free Schedule Maker & Calendar Creator | FreeScheduleMaker',
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: 'FreeScheduleMaker',
-    url: 'https://freeschedulemaker.com',
+    url: 'https://www.freeschedulemaker.com',
   },
   twitter: {
     card: 'summary_large_image',

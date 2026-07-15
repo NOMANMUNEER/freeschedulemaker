@@ -10,7 +10,7 @@ import AddEventModal from './AddEventModal';
 import TemplateSelector from './TemplateSelector';
 import ExportButtons from './ExportButtons';
 import FeedbackBox from '../common/FeedbackBox';
-import { Calendar, Plus, Settings, Sparkles, HelpCircle } from 'lucide-react';
+import { Calendar, Plus, Settings, Sparkles } from 'lucide-react';
 
 type ScheduleBuilderProps = {
   variant: BuilderVariantId;
@@ -21,24 +21,11 @@ export default function ScheduleBuilder({ variant, fullScreen = false }: Schedul
   const { events, removeEvent, switchVariant, currentVariant } = useScheduleStore();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isAddEventOpen, setIsAddEventOpen] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
 
   // Switch state variant on mount/change
   useEffect(() => {
     switchVariant(variant);
-    setIsMounted(true);
   }, [variant, switchVariant]);
-
-  if (!isMounted) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-pulse flex flex-col items-center gap-4 text-slate-500">
-          <Calendar className="h-10 w-10 text-indigo-500 animate-bounce" />
-          <span className="font-medium">Loading schedule builder...</span>
-        </div>
-      </div>
-    );
-  }
 
   const config = BUILDER_VARIANTS[currentVariant] || BUILDER_VARIANTS.default;
 

@@ -20,6 +20,11 @@ const PALETTE_COLORS = [
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
+const getAutoColor = (value: string) => {
+  const hash = value.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return PALETTE_COLORS[hash % PALETTE_COLORS.length];
+};
+
 export default function AddEventModal({ isOpen, onClose, initialDay, initialTime }: AddEventModalProps) {
   const { currentVariant, addEvent, settings } = useScheduleStore();
   const config = BUILDER_VARIANTS[currentVariant] || BUILDER_VARIANTS.default;
@@ -58,16 +63,6 @@ export default function AddEventModal({ isOpen, onClose, initialDay, initialTime
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-
-  // Pre-load default colors based on configuration settings if auto-color is enabled
-  useEffect(() => {
-    if (settings.autoSelectColor) {
-      // Pick a semi-random color from palette
-      const hash = title.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-      const colorIndex = hash % PALETTE_COLORS.length;
-      setSelectedColor(PALETTE_COLORS[colorIndex]);
-    }
-  }, [title, settings.autoSelectColor]);
 
   // Set default color from config categories if possible
   useEffect(() => {
@@ -160,7 +155,13 @@ export default function AddEventModal({ isOpen, onClose, initialDay, initialTime
                 type="text"
                 placeholder={`Enter ${config.eventLabels.title.toLowerCase()}...`}
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e) => {
+                  const nextTitle = e.target.value;
+                  setTitle(nextTitle);
+                  if (settings.autoSelectColor) {
+                    setSelectedColor(getAutoColor(nextTitle));
+                  }
+                }}
                 className="flex-1 px-3 py-2 text-sm outline-hidden bg-transparent text-slate-800 font-medium"
                 required
               />

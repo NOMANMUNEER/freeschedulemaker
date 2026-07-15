@@ -31,7 +31,7 @@ export default function HowItWorks() {
             </div>
             <h3 className="text-lg font-bold text-slate-900 mb-2">2. Insert Events</h3>
             <p className="text-xs text-slate-500 leading-relaxed">
-              Click directly on the timetable grid cells or press 'Create' to fill in course names, employee shifts, or study goals.
+              Click directly on the timetable grid cells or press Create to fill in course names, employee shifts, or study goals.
             </p>
           </div>
 

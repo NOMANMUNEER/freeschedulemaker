@@ -17,7 +17,7 @@ export default function Header() {
           <div className="flex items-center">
             <Link href="/" className="flex items-center gap-2 font-bold text-slate-900 hover:opacity-90 transition">
               <Calendar className="h-6 w-6 text-indigo-600" />
-              <span className="text-base tracking-tight">ScheduleBuilder</span>
+              <span className="text-base tracking-tight">FreeScheduleMaker</span>
             </Link>
           </div>
 

@@ -12,10 +12,80 @@ const nextConfig: NextConfig = {
             value: 'http',
           },
         ],
-        destination: 'https://freeschedulemaker.com/:path*',
+        destination: 'https://www.freeschedulemaker.com/:path*',
         permanent: true,
       },
-      // 🚀 301 Redirects for Old SEO Routes to preferred canonical pages
+      // 301 redirects for old SEO routes to preferred canonical pages.
+      {
+        source: '/free-online-schedule-maker',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/schedule-maker-free-online',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/schedule-maker-online-free',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/free-schedule-builder',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/weekly-schedule-maker-online-free',
+        destination: '/weekly-schedule-maker',
+        permanent: true,
+      },
+      {
+        source: '/weekly-schedule-creator',
+        destination: '/weekly-schedule-maker',
+        permanent: true,
+      },
+      {
+        source: '/create-weekly-schedule',
+        destination: '/weekly-schedule-maker',
+        permanent: true,
+      },
+      {
+        source: '/class-schedule-generator-online',
+        destination: '/class-schedule-maker',
+        permanent: true,
+      },
+      {
+        source: '/create-class-schedule',
+        destination: '/class-schedule-maker',
+        permanent: true,
+      },
+      {
+        source: '/create-class-schedule-online',
+        destination: '/class-schedule-maker',
+        permanent: true,
+      },
+      {
+        source: '/free-college-schedule-maker',
+        destination: '/college-schedule-maker',
+        permanent: true,
+      },
+      {
+        source: '/college-timetable-maker',
+        destination: '/college-schedule-maker',
+        permanent: true,
+      },
+      {
+        source: '/timetable-maker-online-free',
+        destination: '/timetable-maker',
+        permanent: true,
+      },
+      {
+        source: '/free-timetable-maker',
+        destination: '/timetable-maker',
+        permanent: true,
+      },
       {
         source: '/university-timetable-creator',
         destination: '/university-timetable-maker',
@@ -44,11 +114,6 @@ const nextConfig: NextConfig = {
       {
         source: '/rotating-schedule-generator-free',
         destination: '/shift-schedule-generator',
-        permanent: true,
-      },
-      {
-        source: '/timetable-maker',
-        destination: '/',
         permanent: true,
       },
       {

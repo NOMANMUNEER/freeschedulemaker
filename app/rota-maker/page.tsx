@@ -4,6 +4,7 @@ import Footer from '../../components/common/Footer';
 import ToolHero from '../../components/seo/ToolHero';
 import ScheduleBuilder from '../../components/builder/ScheduleBuilder';
 import UseCases from '../../components/seo/UseCases';
+import IntentContent from '../../components/seo/IntentContent';
 import HowItWorks from '../../components/seo/HowItWorks';
 import FAQSection from '../../components/seo/FAQSection';
 import RelatedTools from '../../components/seo/RelatedTools';
@@ -33,6 +34,7 @@ export default function RotaMakerPage() {
       <ToolHero variant={VARIANT} />
       <ScheduleBuilder variant={VARIANT} />
       <UseCases variant={VARIANT} />
+      <IntentContent variant={VARIANT} />
       <HowItWorks />
       <FAQSection variant={VARIANT} />
       <RelatedTools variant={VARIANT} />

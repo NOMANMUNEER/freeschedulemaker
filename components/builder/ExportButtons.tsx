@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useScheduleStore } from '../../store/useScheduleStore';
 import { exportScheduleToPNG } from '../../lib/exportSchedule';
-import { Download, Trash2, Loader2 } from 'lucide-react';
+import { Download, Loader2 } from 'lucide-react';
 
 export default function ExportButtons() {
   const { clearSchedule, currentVariant } = useScheduleStore();
@@ -14,7 +14,7 @@ export default function ExportButtons() {
     try {
       const fileName = `${currentVariant}_schedule.png`;
       await exportScheduleToPNG('schedule-grid', fileName);
-    } catch (error) {
+    } catch {
       alert('Failed to download schedule image. Please try again.');
     } finally {
       setIsExporting(false);

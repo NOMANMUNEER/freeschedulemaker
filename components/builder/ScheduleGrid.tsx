@@ -6,7 +6,7 @@ import EventCard from './EventCard';
 import AddEventModal from './AddEventModal';
 
 export default function ScheduleGrid() {
-  const { events, settings, currentVariant } = useScheduleStore();
+  const { events, settings } = useScheduleStore();
   const { visibleDays, startHour, endHour, clockType } = settings;
 
   // Add state for the grid's modal

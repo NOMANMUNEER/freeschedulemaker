@@ -11,6 +11,14 @@ interface SettingsModalProps {
 }
 
 type TabType = 'Layout' | 'Time' | 'Event' | 'Font';
+type EventSettingKey = 'autoSelectColor' | 'showTimeInEvents' | 'stretchToFit' | 'centerText';
+const LINE_SPACING_OPTIONS: ScheduleSettings['lineSpacing'][] = [15, 30, 60];
+const EVENT_SETTINGS: { label: string; key: EventSettingKey }[] = [
+  { label: 'Auto select color', key: 'autoSelectColor' },
+  { label: 'Show time in events', key: 'showTimeInEvents' },
+  { label: 'Stretch to fit content', key: 'stretchToFit' },
+  { label: 'Center text', key: 'centerText' },
+];
 
 export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   const { settings, updateSettings } = useScheduleStore();
@@ -149,11 +157,11 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               <div>
                 <label className="block text-xs font-semibold text-slate-600 mb-1.5">Line spacing (minutes)</label>
                 <div className="flex border border-slate-300 rounded-md overflow-hidden bg-white">
-                  {[15, 30, 60].map((spacing) => (
+                  {LINE_SPACING_OPTIONS.map((spacing) => (
                     <button
                       key={spacing}
                       type="button"
-                      onClick={() => setTempSettings({ ...tempSettings, lineSpacing: spacing as any })}
+                      onClick={() => setTempSettings({ ...tempSettings, lineSpacing: spacing })}
                       className={`flex-1 py-2 text-center border-r last:border-0 border-slate-300 transition ${tempSettings.lineSpacing === spacing ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}
                     >
                       {spacing}
@@ -185,17 +193,12 @@ export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           {/* EVENT TAB CONTENT */}
           {activeTab === 'Event' && (
             <div className="space-y-4 text-sm">
-              {[
-                { label: 'Auto select color', key: 'autoSelectColor' },
-                { label: 'Show time in events', key: 'showTimeInEvents' },
-                { label: 'Stretch to fit content', key: 'stretchToFit' },
-                { label: 'Center text', key: 'centerText' },
-              ].map((item) => (
+              {EVENT_SETTINGS.map((item) => (
                 <div key={item.key}>
                   <label className="block text-xs font-semibold text-slate-600 mb-1.5">{item.label}</label>
                   <div className="flex border border-slate-300 rounded-md overflow-hidden bg-white">
-                    <button type="button" onClick={() => setTempSettings({ ...tempSettings, [item.key]: true })} className={`flex-1 py-2 text-center transition ${(tempSettings as any)[item.key] ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>Yes</button>
-                    <button type="button" onClick={() => setTempSettings({ ...tempSettings, [item.key]: false })} className={`flex-1 py-2 text-center border-l border-slate-300 transition ${!((tempSettings as any)[item.key]) ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>No</button>
+                    <button type="button" onClick={() => setTempSettings({ ...tempSettings, [item.key]: true })} className={`flex-1 py-2 text-center transition ${tempSettings[item.key] ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>Yes</button>
+                    <button type="button" onClick={() => setTempSettings({ ...tempSettings, [item.key]: false })} className={`flex-1 py-2 text-center border-l border-slate-300 transition ${!tempSettings[item.key] ? 'bg-indigo-50 font-bold text-indigo-900' : 'hover:bg-slate-50'}`}>No</button>
                   </div>
                 </div>
               ))}

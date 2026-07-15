@@ -78,7 +78,7 @@ export default function TemplateSelector() {
               <div className="flex-1">
                 <h3 className="font-bold text-slate-900 text-base mb-1">Load Schedule Template</h3>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Your schedule already has active events. How would you like to apply the template <span className="font-semibold text-slate-800">"{selectedTemplate.name}"</span>?
+                  Your schedule already has active events. How would you like to apply the template <span className="font-semibold text-slate-800">&quot;{selectedTemplate.name}&quot;</span>?
                 </p>
               </div>
             </div>

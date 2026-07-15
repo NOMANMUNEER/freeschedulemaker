@@ -42,7 +42,7 @@ export default function UseCases({ variant }: UseCasesProps) {
 
         {/* Testimonial Box */}
         <div className="w-full lg:w-[350px] bg-slate-50 p-8 rounded-2xl border border-slate-200 shadow-xs relative shrink-0">
-          <div className="text-5xl text-indigo-200 absolute top-4 left-6 font-serif">"</div>
+          <div className="text-5xl text-indigo-200 absolute top-4 left-6 font-serif">&quot;</div>
           <div className="relative z-10 pt-6">
             <div className="flex gap-1 mb-4">
               {[...Array(5)].map((_, i) => (

@@ -1,18 +1,13 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 
 export default function CookieBanner() {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    // Check if the user has already accepted the cookies
-    const consent = localStorage.getItem('cookieConsent');
-    if (!consent) {
-      setIsVisible(true);
-    }
-  }, []);
+  const [isVisible, setIsVisible] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return !localStorage.getItem('cookieConsent');
+  });
 
   const handleAccept = () => {
     localStorage.setItem('cookieConsent', 'true');
@@ -27,7 +22,7 @@ export default function CookieBanner() {
         <div>
           <h3 className="text-slate-900 font-bold text-lg mb-1">We value your privacy</h3>
           <p className="text-sm text-slate-600 leading-relaxed">
-            We use cookies to enhance your browsing experience, serve personalized ads, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.
+            We use cookies to enhance your browsing experience, serve personalized ads, and analyze our traffic. By clicking &quot;Accept All&quot;, you consent to our use of cookies.
           </p>
         </div>
         

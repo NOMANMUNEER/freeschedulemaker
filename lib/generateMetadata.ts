@@ -5,7 +5,7 @@ import { BuilderVariantId } from '../types/schedule';
 
 export function generatePageMetadata(variant: BuilderVariantId): Metadata {
   const seoData = SEO_PAGES[variant] || SEO_PAGES.default;
-  const baseUrl = 'https://freeschedulemaker.com';
+  const baseUrl = 'https://www.freeschedulemaker.com';
   const url = `${baseUrl}${seoData.canonicalPath === '/' ? '' : seoData.canonicalPath}`;
 
   return {
