@@ -1,9 +1,10 @@
 import { MetadataRoute } from 'next';
+import { PROGRAMMATIC_PAGES } from '../data/programmaticPages';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.freeschedulemaker.com';
 
-  return [
+  const staticPages: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}`,
       lastModified: new Date(),
@@ -15,6 +16,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/tools`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.85,
     },
     // Canonical preferred SEO pages
     {
@@ -97,4 +104,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.5,
     },
   ];
+
+  const programmaticPages: MetadataRoute.Sitemap = PROGRAMMATIC_PAGES.map((page) => ({
+    url: `${baseUrl}/tools/${page.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...programmaticPages];
 }

@@ -87,6 +87,16 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: '/class-timetable-maker',
+        destination: '/tools/class-timetable-maker',
+        permanent: true,
+      },
+      {
+        source: '/course-schedule-maker',
+        destination: '/tools/course-schedule-maker',
+        permanent: true,
+      },
+      {
         source: '/university-timetable-creator',
         destination: '/university-timetable-maker',
         permanent: true,
@@ -98,12 +108,52 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/work-schedule-maker',
-        destination: '/employee-schedule-creator',
+        destination: '/tools/work-schedule-maker',
         permanent: true,
       },
       {
         source: '/work-schedule-generator-online-free',
+        destination: '/tools/work-schedule-maker',
+        permanent: true,
+      },
+      {
+        source: '/employee-schedule-maker',
         destination: '/employee-schedule-creator',
+        permanent: true,
+      },
+      {
+        source: '/employee-work-schedule-maker',
+        destination: '/employee-schedule-creator',
+        permanent: true,
+      },
+      {
+        source: '/free-employee-schedule-maker',
+        destination: '/employee-schedule-creator',
+        permanent: true,
+      },
+      {
+        source: '/staff-schedule-maker',
+        destination: '/tools/staff-schedule-maker',
+        permanent: true,
+      },
+      {
+        source: '/student-schedule-maker',
+        destination: '/tools/student-schedule-maker',
+        permanent: true,
+      },
+      {
+        source: '/study-schedule-maker',
+        destination: '/tools/study-schedule-maker',
+        permanent: true,
+      },
+      {
+        source: '/daily-schedule-maker',
+        destination: '/tools/daily-schedule-maker',
+        permanent: true,
+      },
+      {
+        source: '/workout-schedule-maker',
+        destination: '/tools/workout-schedule-maker',
         permanent: true,
       },
       {
@@ -113,7 +163,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/rotating-schedule-generator-free',
-        destination: '/shift-schedule-generator',
+        destination: '/tools/rotating-schedule-maker',
         permanent: true,
       },
       {

@@ -10,6 +10,7 @@ type SpecializedPageProps = {
   badge: string;
   heading: string;
   subheading: string;
+  canonicalUrl?: string;
   builderVariant: 'default' | 'weekly' | 'university' | 'rota' | 'employee' | 'shift' | 'revision';
   sections: {
     title: string;
@@ -25,12 +26,49 @@ export default function SpecializedSchedulePage({
   badge,
   heading,
   subheading,
+  canonicalUrl,
   builderVariant,
   sections,
   faqs,
 }: SpecializedPageProps) {
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
+
+  const appSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: heading,
+    description: subheading,
+    applicationCategory: 'ProductivityApplication',
+    operatingSystem: 'All',
+    url: canonicalUrl,
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+  };
+
   return (
     <main className="min-h-screen flex flex-col bg-slate-50">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }}
+      />
       <Header />
 
       <header className="bg-white border-b border-slate-200 pt-20 pb-16 px-6 text-center">
