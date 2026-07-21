@@ -5,6 +5,7 @@ import ToolHero from '../components/seo/ToolHero';
 import ScheduleBuilder from '../components/builder/ScheduleBuilder';
 import UseCases from '../components/seo/UseCases';
 import IntentContent from '../components/seo/IntentContent';
+import HomepageSearchIntent from '../components/seo/HomepageSearchIntent';
 import HowItWorks from '../components/seo/HowItWorks';
 import FAQSection from '../components/seo/FAQSection';
 import RelatedTools from '../components/seo/RelatedTools';
@@ -39,6 +40,7 @@ export default function HomePage() {
       
       <UseCases variant={VARIANT} />
       <IntentContent variant={VARIANT} />
+      <HomepageSearchIntent />
       <HowItWorks />
       <FAQSection variant={VARIANT} />
       <RelatedTools variant={VARIANT} />

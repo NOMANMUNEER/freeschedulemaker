@@ -21,8 +21,8 @@ export interface SEOPageData {
 export const SEO_PAGES: Record<BuilderVariantId, SEOPageData> = {
   default: {
     variantId: 'default',
-    metaTitle: 'Free Schedule Maker Online | Create Schedules for Free',
-    metaDescription: 'Use FreeScheduleMaker as a free online schedule maker to create weekly schedules, class timetables, work rotas, and shift plans. No signup required.',
+    metaTitle: 'Free Schedule Maker Online | Free Schedule Builder',
+    metaDescription: 'Use FreeScheduleMaker as a free online schedule maker and free schedule builder for weekly schedules, class timetables, work rotas, and shift plans.',
     keywords: 'free schedule maker, online schedule maker, free online schedule maker, schedule maker free, schedule maker online, free schedule builder',
     canonicalPath: '/',
     heroBadge: 'Free Online Schedule Maker',
