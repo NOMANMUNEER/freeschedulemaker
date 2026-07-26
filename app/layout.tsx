@@ -50,9 +50,11 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <GoogleAdsense />
+      </head>
       <body className="min-h-full flex flex-col">
         <GoogleAnalytics />
-        <GoogleAdsense />
         {children}
         <CookieBanner />
       </body>
