@@ -7,12 +7,15 @@ export const HEADER_NAV: NavItem[] = [
   { label: 'Home', href: '/' },
   { label: 'Weekly Schedule Maker', href: '/weekly-schedule-maker' },
   { label: 'Create Schedule', href: '/builder' },
+  { label: 'Guides', href: '/guides' },
   { label: 'All Tools', href: '/tools' },
   { label: 'University Timetable', href: '/university-timetable-maker' },
   { label: 'Rota Maker', href: '/rota-maker' },
 ];
 
 export const FOOTER_NAV_LINKS: NavItem[] = [
+  { label: 'Guides', href: '/guides' },
+  { label: 'Templates', href: '/templates' },
   { label: 'About Us', href: '/about' },
   { label: 'Contact', href: '/contact' },
   { label: 'Privacy Policy', href: '/privacy-policy' },

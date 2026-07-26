@@ -5,7 +5,7 @@ import { Users, Calendar } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'About Us | FreeScheduleMaker',
-  description: 'Learn about FreeScheduleMaker — the free online tool for building weekly schedules and timetables.',
+  description: 'Learn about FreeScheduleMaker, the free online tool for building weekly schedules and timetables.',
   alternates: {
     canonical: 'https://www.freeschedulemaker.com/about',
   },

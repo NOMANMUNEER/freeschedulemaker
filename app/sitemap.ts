@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { PROGRAMMATIC_PAGES } from '../data/programmaticPages';
+import { PLANNING_GUIDES } from '../data/planningGuides';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.freeschedulemaker.com';
@@ -22,6 +23,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/guides`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.75,
+    },
+    {
+      url: `${baseUrl}/templates`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.75,
     },
     // Canonical preferred SEO pages
     {
@@ -112,5 +125,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticPages, ...programmaticPages];
+  const guidePages: MetadataRoute.Sitemap = PLANNING_GUIDES.map((guide) => ({
+    url: `${baseUrl}/guides/${guide.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.65,
+  }));
+
+  return [...staticPages, ...programmaticPages, ...guidePages];
 }
