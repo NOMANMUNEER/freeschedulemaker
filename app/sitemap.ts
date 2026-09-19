@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { PROGRAMMATIC_PAGES } from '../data/programmaticPages';
 import { PLANNING_GUIDES } from '../data/planningGuides';
+import { PINTEREST_LANDING_PAGES } from '../data/pinterestLandingPages';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.freeschedulemaker.com';
@@ -132,5 +133,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.65,
   }));
 
-  return [...staticPages, ...programmaticPages, ...guidePages];
+  const pinterestPages: MetadataRoute.Sitemap = PINTEREST_LANDING_PAGES.map((page) => ({
+    url: `${baseUrl}/${page.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...programmaticPages, ...guidePages, ...pinterestPages];
 }

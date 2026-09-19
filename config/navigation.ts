@@ -16,6 +16,10 @@ export const HEADER_NAV: NavItem[] = [
 export const FOOTER_NAV_LINKS: NavItem[] = [
   { label: 'Guides', href: '/guides' },
   { label: 'Templates', href: '/templates' },
+  { label: 'Aesthetic Schedule Templates', href: '/aesthetic-schedule-templates' },
+  { label: 'Study Planner Ideas', href: '/study-planner-ideas' },
+  { label: 'Sunday Reset Routine', href: '/sunday-reset-routine' },
+  { label: 'Time Blocking Templates', href: '/time-blocking-templates' },
   { label: 'About Us', href: '/about' },
   { label: 'Contact', href: '/contact' },
   { label: 'Privacy Policy', href: '/privacy-policy' },

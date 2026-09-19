@@ -69,6 +69,33 @@ const TEMPLATES = [
   },
 ];
 
+const PRINTABLE_TEMPLATES = [
+  {
+    title: 'Printable Weekly Planner',
+    description: 'Use this for weekly routines, meal planning, errands, work blocks, chores, and a Sunday reset.',
+    format: 'Best layout: Monday to Sunday, 7:00 AM to 9:00 PM',
+    href: '/weekly-schedule-maker',
+  },
+  {
+    title: 'Printable Study Planner',
+    description: 'Plan subject blocks, active recall, homework, mock tests, and review sessions before exams.',
+    format: 'Best layout: school days plus weekend revision blocks',
+    href: '/guides/study-schedule-templates',
+  },
+  {
+    title: 'Printable Class Schedule',
+    description: 'Create a clean class timetable for lectures, labs, tutorials, rooms, teachers, and office hours.',
+    format: 'Best layout: Monday to Friday with class periods',
+    href: '/class-schedule-maker',
+  },
+  {
+    title: 'Printable Work Schedule',
+    description: 'Build a simple rota for shifts, coverage, handoffs, breaks, and role assignments.',
+    format: 'Best layout: full week with morning, afternoon, and evening blocks',
+    href: '/employee-schedule-creator',
+  },
+];
+
 export default function TemplatesPage() {
   return (
     <main className="min-h-screen bg-slate-50">
@@ -137,6 +164,33 @@ export default function TemplatesPage() {
               </div>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="py-14 px-6 bg-white border-y border-slate-200">
+        <div className="max-w-6xl mx-auto">
+          <div className="max-w-3xl mb-8">
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">Printable Schedule Templates</h2>
+            <p className="text-sm text-slate-600 leading-7">
+              These printable template ideas are designed for people who want a schedule they can download, print, pin to a wall, add to a planner, or share on Pinterest. Start with a template type, customize the colors and blocks, then export the finished schedule as a PNG.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {PRINTABLE_TEMPLATES.map((template) => (
+              <article key={template.title} className="bg-slate-50 border border-slate-200 rounded-lg p-5">
+                <h3 className="text-lg font-bold text-slate-900 mb-3">{template.title}</h3>
+                <p className="text-sm text-slate-600 leading-7 mb-4">{template.description}</p>
+                <p className="text-xs text-slate-500 leading-relaxed mb-5">
+                  <span className="font-bold text-slate-700">Print tip:</span> {template.format}
+                </p>
+                <Link href={template.href} className="inline-flex items-center gap-2 text-sm font-bold text-sky-700 hover:text-sky-800">
+                  Create printable
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 

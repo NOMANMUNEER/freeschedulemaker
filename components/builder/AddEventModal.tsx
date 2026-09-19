@@ -125,22 +125,22 @@ export default function AddEventModal({ isOpen, onClose, initialDay, initialTime
   };
 
   return (
-    <div className="fixed inset-0 z-[300] flex items-center justify-center bg-black/40 backdrop-blur-xs">
-      <div className="w-[500px] max-h-[90vh] bg-[#eef1f6] rounded-xl shadow-2xl border border-slate-300 flex flex-col text-slate-800 relative overflow-hidden">
+    <div className="fixed inset-0 z-[300] flex items-end sm:items-center justify-center bg-black/40 backdrop-blur-xs p-3 sm:p-4">
+      <div className="w-full sm:w-[500px] max-h-[92vh] bg-[#eef1f6] rounded-t-2xl sm:rounded-xl shadow-2xl border border-slate-300 flex flex-col text-slate-800 relative overflow-hidden">
         
         {/* Header section */}
-        <div className="flex items-center justify-between p-4 bg-[#eef1f6] border-b border-slate-300 shrink-0">
-          <div className="flex items-center gap-2 text-[#1e3a8a] font-bold text-lg">
+        <div className="flex items-center justify-between gap-3 p-4 bg-[#eef1f6] border-b border-slate-300 shrink-0">
+          <div className="flex items-center gap-2 text-[#1e3a8a] font-bold text-base sm:text-lg min-w-0">
             <Calendar className="h-5 w-5" />
-            <span>{config.primaryActionLabel}</span>
+            <span className="truncate">{config.primaryActionLabel}</span>
           </div>
-          <button type="button" onClick={onClose} className="text-slate-500 hover:text-slate-800 transition">
+          <button type="button" onClick={onClose} className="text-slate-500 hover:text-slate-800 transition p-2 -mr-2 rounded-lg">
             <X className="h-5 w-5" />
           </button>
         </div>
 
         {/* Form Inputs Container */}
-        <form onSubmit={handleSubmit} className="p-5 space-y-4 bg-white/40 overflow-y-auto flex-1">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-5 space-y-4 bg-white/40 overflow-y-auto flex-1">
           
           {/* Title Field Input with Color Picker */}
           <div>
@@ -162,7 +162,7 @@ export default function AddEventModal({ isOpen, onClose, initialDay, initialTime
                     setSelectedColor(getAutoColor(nextTitle));
                   }
                 }}
-                className="flex-1 px-3 py-2 text-sm outline-hidden bg-transparent text-slate-800 font-medium"
+                className="min-w-0 flex-1 px-3 py-2.5 text-sm outline-hidden bg-transparent text-slate-800 font-medium"
                 required
               />
               <div className="flex items-center gap-1 pr-2">
@@ -171,7 +171,7 @@ export default function AddEventModal({ isOpen, onClose, initialDay, initialTime
                   type="button"
                   onClick={() => setShowColorPicker(!showColorPicker)}
                   style={{ backgroundColor: selectedColor }}
-                  className="px-2 py-0.5 text-xs text-white font-bold rounded border border-black/10 hover:opacity-85 transition cursor-pointer"
+                  className="h-8 px-2 text-xs text-white font-bold rounded border border-black/10 hover:opacity-85 transition cursor-pointer"
                 >
                   Color
                 </button>
@@ -179,7 +179,7 @@ export default function AddEventModal({ isOpen, onClose, initialDay, initialTime
 
               {/* Popover Color Picker */}
               {showColorPicker && (
-                <div ref={colorPickerRef} className="absolute right-0 top-12 bg-[#eef1f6] border border-slate-300 rounded-lg p-4 shadow-xl z-[350] w-64">
+                <div ref={colorPickerRef} className="absolute right-0 top-12 bg-[#eef1f6] border border-slate-300 rounded-lg p-4 shadow-xl z-[350] w-64 max-w-[calc(100vw-2rem)]">
                   <p className="text-xs font-bold text-[#1e3a8a] mb-2 text-center">Select Event Color</p>
                   <div className="grid grid-cols-4 gap-2">
                     {PALETTE_COLORS.map((color) => (
@@ -205,7 +205,7 @@ export default function AddEventModal({ isOpen, onClose, initialDay, initialTime
           {/* Days Selection Matrix */}
           <div>
             <label className="block text-xs font-semibold text-slate-600 mb-1">Select Day(s)</label>
-            <div className="grid grid-cols-7 border border-slate-300 rounded-md overflow-hidden bg-white text-xs shadow-xs">
+            <div className="grid grid-cols-4 sm:grid-cols-7 border border-slate-300 rounded-md overflow-hidden bg-white text-xs shadow-xs">
               {DAYS.map((day) => {
                 const isSelected = selectedDays.includes(day);
                 return (
@@ -213,7 +213,7 @@ export default function AddEventModal({ isOpen, onClose, initialDay, initialTime
                     key={day}
                     type="button"
                     onClick={() => handleDayToggle(day)}
-                    className={`py-2.5 text-center border-r border-slate-200 last:border-0 font-medium transition cursor-pointer ${
+                    className={`py-2.5 text-center border-r border-b sm:border-b-0 border-slate-200 last:border-0 font-medium transition cursor-pointer ${
                       isSelected 
                         ? 'bg-indigo-50 font-bold text-indigo-900' 
                         : 'text-slate-500 hover:bg-slate-50'
@@ -229,7 +229,7 @@ export default function AddEventModal({ isOpen, onClose, initialDay, initialTime
           {/* Time pickers inputs selection */}
           <div>
             <label className="block text-xs font-semibold text-slate-600 mb-1">Time Block</label>
-            <div className="flex border border-slate-300 rounded-md bg-white shadow-xs relative">
+            <div className="flex flex-col sm:flex-row border border-slate-300 rounded-md bg-white shadow-xs relative">
               <div className="p-2.5 text-slate-400 bg-slate-50 border-r border-slate-200 rounded-l-md">
                 <Clock className="h-4 w-4" />
               </div>
@@ -237,7 +237,7 @@ export default function AddEventModal({ isOpen, onClose, initialDay, initialTime
               <button 
                 type="button"
                 onClick={() => { setShowStartDropdown(!showStartDropdown); setShowEndDropdown(false); }}
-                className="flex-1 px-3 py-2 text-sm text-left hover:bg-slate-50 flex justify-between items-center text-slate-700 font-medium cursor-pointer"
+                className="flex-1 px-3 py-2.5 text-sm text-left hover:bg-slate-50 flex justify-between items-center text-slate-700 font-medium cursor-pointer"
               >
                 <span>Start: {startTime}</span>
               </button>
@@ -245,14 +245,14 @@ export default function AddEventModal({ isOpen, onClose, initialDay, initialTime
               <button 
                 type="button"
                 onClick={() => { setShowEndDropdown(!showEndDropdown); setShowStartDropdown(false); }}
-                className="flex-1 px-3 py-2 text-sm text-left hover:bg-slate-50 border-l border-slate-200 flex justify-between items-center text-slate-700 font-medium cursor-pointer"
+                className="flex-1 px-3 py-2.5 text-sm text-left hover:bg-slate-50 border-t sm:border-t-0 sm:border-l border-slate-200 flex justify-between items-center text-slate-700 font-medium cursor-pointer"
               >
                 <span>End: {endTime}</span>
               </button>
 
               {/* Start Dropdown */}
               {showStartDropdown && (
-                <div className="absolute left-10 top-11 bg-white border border-slate-300 shadow-xl rounded-md max-h-48 overflow-y-auto w-28 z-[350]">
+                <div className="absolute left-10 top-24 sm:top-11 bg-white border border-slate-300 shadow-xl rounded-md max-h-48 overflow-y-auto w-28 z-[350]">
                   {generateHourOptions().map((hr) => (
                     <button
                       key={hr}
@@ -268,7 +268,7 @@ export default function AddEventModal({ isOpen, onClose, initialDay, initialTime
 
               {/* End Dropdown */}
               {showEndDropdown && (
-                <div className="absolute right-0 top-11 bg-white border border-slate-300 shadow-xl rounded-md max-h-48 overflow-y-auto w-28 z-[350]">
+                <div className="absolute right-0 top-24 sm:top-11 bg-white border border-slate-300 shadow-xl rounded-md max-h-48 overflow-y-auto w-28 z-[350]">
                   {generateHourOptions().map((hr) => (
                     <button
                       key={hr}
@@ -298,7 +298,7 @@ export default function AddEventModal({ isOpen, onClose, initialDay, initialTime
                 placeholder={`Enter name or role...`}
                 value={person}
                 onChange={(e) => setPerson(e.target.value)}
-                className="flex-1 px-3 py-2 text-sm outline-hidden bg-transparent text-slate-800"
+                className="min-w-0 flex-1 px-3 py-2.5 text-sm outline-hidden bg-transparent text-slate-800"
               />
             </div>
           </div>
@@ -317,7 +317,7 @@ export default function AddEventModal({ isOpen, onClose, initialDay, initialTime
                 placeholder={`Enter room, building, or location...`}
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                className="flex-1 px-3 py-2 text-sm outline-hidden bg-transparent text-slate-800"
+                className="min-w-0 flex-1 px-3 py-2.5 text-sm outline-hidden bg-transparent text-slate-800"
               />
             </div>
           </div>
@@ -336,7 +336,7 @@ export default function AddEventModal({ isOpen, onClose, initialDay, initialTime
                 placeholder={`Enter type or category...`}
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="flex-1 px-3 py-2 text-sm outline-hidden bg-transparent text-slate-800"
+                className="min-w-0 flex-1 px-3 py-2.5 text-sm outline-hidden bg-transparent text-slate-800"
               />
             </div>
             
@@ -373,13 +373,13 @@ export default function AddEventModal({ isOpen, onClose, initialDay, initialTime
                 placeholder="Optional notes or details..."
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className="flex-1 px-3 py-2 text-sm outline-hidden resize-none bg-transparent text-slate-800"
+                className="min-w-0 flex-1 px-3 py-2.5 text-sm outline-hidden resize-none bg-transparent text-slate-800"
               />
             </div>
           </div>
 
           {/* Action Trigger Button */}
-          <div className="pt-2">
+          <div className="sticky bottom-0 -mx-4 sm:-mx-5 -mb-4 sm:-mb-5 px-4 sm:px-5 py-3 bg-white/95 border-t border-slate-200">
             <button 
               type="submit"
               className="w-full py-3 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 transition shadow-xs hover:shadow-md cursor-pointer"

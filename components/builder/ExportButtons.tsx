@@ -2,12 +2,13 @@
 
 import React, { useState } from 'react';
 import { useScheduleStore } from '../../store/useScheduleStore';
-import { exportScheduleToPNG } from '../../lib/exportSchedule';
-import { Download, Loader2 } from 'lucide-react';
+import { exportScheduleToPDF, exportScheduleToPNG } from '../../lib/exportSchedule';
+import { Download, FileText, Loader2 } from 'lucide-react';
 
 export default function ExportButtons() {
   const { clearSchedule, currentVariant } = useScheduleStore();
   const [isExporting, setIsExporting] = useState(false);
+  const [isPdfExporting, setIsPdfExporting] = useState(false);
 
   const handleDownload = async () => {
     setIsExporting(true);
@@ -21,14 +22,25 @@ export default function ExportButtons() {
     }
   };
 
+  const handleSavePDF = async () => {
+    setIsPdfExporting(true);
+    try {
+      await exportScheduleToPDF('schedule-grid', `${currentVariant.replace(/_/g, ' ')} schedule`);
+    } catch {
+      alert('Failed to prepare PDF. Please allow popups and try again.');
+    } finally {
+      setIsPdfExporting(false);
+    }
+  };
+
   return (
     <div className="space-y-2 w-full">
-      {/* Export to PNG Button */}
+      {/* Export Buttons */}
       <button 
         type="button"
         onClick={handleDownload}
         disabled={isExporting}
-        className="w-full flex justify-center items-center gap-2 bg-[#eef1f6] text-[#1e3a8a] border border-[#1e3a8a]/30 font-bold hover:bg-[#1e3a8a] hover:text-white py-3 rounded-xl text-xs transition shadow-xs disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
+        className="w-full min-h-11 flex justify-center items-center gap-2 bg-[#eef1f6] text-[#1e3a8a] border border-[#1e3a8a]/30 font-bold hover:bg-[#1e3a8a] hover:text-white px-3 py-3 rounded-xl text-xs transition shadow-xs disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
       >
         {isExporting ? (
           <>
@@ -36,7 +48,26 @@ export default function ExportButtons() {
           </>
         ) : (
           <>
-            <Download className="h-4 w-4" /> Download Free Schedule (PNG)
+            <Download className="h-4 w-4 shrink-0" />
+            <span className="leading-tight">Download Schedule PNG</span>
+          </>
+        )}
+      </button>
+
+      <button
+        type="button"
+        onClick={handleSavePDF}
+        disabled={isPdfExporting}
+        className="w-full min-h-11 flex justify-center items-center gap-2 bg-white text-slate-800 border border-slate-300 font-bold hover:bg-slate-900 hover:text-white px-3 py-3 rounded-xl text-xs transition shadow-xs disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
+      >
+        {isPdfExporting ? (
+          <>
+            <Loader2 className="h-4 w-4 animate-spin" /> Preparing PDF...
+          </>
+        ) : (
+          <>
+            <FileText className="h-4 w-4 shrink-0" />
+            <span className="leading-tight">Save as PDF</span>
           </>
         )}
       </button>
@@ -49,7 +80,7 @@ export default function ExportButtons() {
             clearSchedule();
           }
         }} 
-        className="w-full text-center border border-slate-200 text-slate-500 hover:bg-red-50 hover:text-red-600 hover:border-red-200 py-2.5 rounded-xl text-xs font-semibold transition cursor-pointer"
+        className="w-full min-h-10 text-center border border-slate-200 text-slate-500 hover:bg-red-50 hover:text-red-600 hover:border-red-200 px-3 py-2.5 rounded-xl text-xs font-semibold transition cursor-pointer"
       >
         Clear Current Schedule
       </button>

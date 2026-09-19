@@ -47,52 +47,55 @@ export default function ScheduleGrid() {
 
   // Dynamic grid column setup styling based on visible days length + 1 time column
   const gridTemplateColumns = {
-    gridTemplateColumns: `repeat(${visibleDays.length + 1}, minmax(0, 1fr))`,
+    gridTemplateColumns: `88px repeat(${visibleDays.length}, minmax(96px, 1fr))`,
   };
 
   return (
-    <div id="schedule-grid" className="w-full bg-white rounded-xl shadow-xs border border-slate-200 overflow-hidden relative">
-      
-      {/* Header Row Days */}
-      <div 
-        style={gridTemplateColumns} 
-        className="grid border-b border-slate-200 bg-slate-100/70 text-center font-semibold text-sm text-slate-600 select-none"
-      >
-        <div className="p-4 border-r border-slate-200">Time</div>
-        {visibleDays.map((day) => (
-          <div key={day} className="p-4 border-r border-slate-200 last:border-r-0 capitalize truncate">
-            {day.substring(0, 3)}
+    <div className="w-full overflow-x-auto pb-2 [-webkit-overflow-scrolling:touch]">
+      <div id="schedule-grid" className="min-w-[760px] bg-white rounded-xl shadow-xs border border-slate-200 overflow-hidden relative">
+        
+        {/* Header Row Days */}
+        <div 
+          style={gridTemplateColumns} 
+          className="grid border-b border-slate-200 bg-slate-100/70 text-center font-semibold text-sm text-slate-600 select-none"
+        >
+          <div className="p-3 sm:p-4 border-r border-slate-200 sticky left-0 z-20 bg-slate-100">Time</div>
+          {visibleDays.map((day) => (
+            <div key={day} className="p-3 sm:p-4 border-r border-slate-200 last:border-r-0 capitalize truncate">
+              {day.substring(0, 3)}
+            </div>
+          ))}
+        </div>
+
+        {/* Time Rows Loop */}
+        {timeSlots.map((slot) => (
+          <div 
+            key={slot.value} 
+            style={gridTemplateColumns} 
+            className="grid border-b border-slate-200 last:border-b-0 h-24"
+          >
+            {/* Time Column */}
+            <div className="flex flex-col justify-center items-center font-bold text-xs text-indigo-950 bg-slate-50 border-r border-slate-200 p-2 select-none sticky left-0 z-10">
+              {slot.label}
+            </div>
+
+            {/* Day Intersection Cells */}
+            {visibleDays.map((day) => {
+              const event = getEventForSlot(day, slot.value);
+              return (
+                <button
+                  key={day}
+                  type="button"
+                  onClick={() => !event && handleSlotClick(day, slot.value)}
+                  className={`border-r border-slate-200 last:border-r-0 p-1 relative bg-white group hover:bg-slate-50/50 transition-colors text-left ${!event ? 'cursor-pointer' : 'cursor-default'}`}
+                >
+                  {event && <EventCard event={event} />}
+                </button>
+              );
+            })}
           </div>
         ))}
       </div>
-
-      {/* Time Rows Loop */}
-      {timeSlots.map((slot) => (
-        <div 
-          key={slot.value} 
-          style={gridTemplateColumns} 
-          className="grid border-b border-slate-200 last:border-b-0 h-24"
-        >
-          {/* Time Column */}
-          <div className="flex flex-col justify-center items-center font-bold text-xs text-indigo-950 bg-slate-50/50 border-r border-slate-200 p-2 select-none">
-            {slot.label}
-          </div>
-
-          {/* Day Intersection Cells */}
-          {visibleDays.map((day) => {
-            const event = getEventForSlot(day, slot.value);
-            return (
-              <div 
-                key={day} 
-                onClick={() => !event && handleSlotClick(day, slot.value)}
-                className={`border-r border-slate-200 last:border-r-0 p-1 relative bg-white group hover:bg-slate-50/50 transition-colors ${!event ? 'cursor-pointer' : ''}`}
-              >
-                {event && <EventCard event={event} />}
-              </div>
-            );
-          })}
-        </div>
-      ))}
 
       {/* Mount the Modal specifically for grid clicks */}
       {isModalOpen && (

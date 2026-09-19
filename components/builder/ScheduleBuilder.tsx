@@ -30,21 +30,21 @@ export default function ScheduleBuilder({ variant, fullScreen = false }: Schedul
   const config = BUILDER_VARIANTS[currentVariant] || BUILDER_VARIANTS.default;
 
   return (
-    <div className={`w-full bg-slate-50 text-slate-900 ${fullScreen ? 'h-screen flex overflow-hidden' : 'py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto'}`}>
+    <div className={`w-full bg-slate-50 text-slate-900 ${fullScreen ? 'min-h-screen lg:h-screen flex overflow-hidden' : 'py-5 px-3 sm:py-8 sm:px-6 lg:px-8 max-w-7xl mx-auto'}`}>
       
-      <div className={`w-full flex flex-col lg:flex-row gap-8 ${fullScreen ? 'h-full overflow-hidden' : ''}`}>
+      <div className={`w-full flex flex-col lg:flex-row gap-4 lg:gap-8 ${fullScreen ? 'h-full overflow-hidden' : ''}`}>
         
         {/* SIDEBAR PANEL */}
-        <aside className={`bg-white border border-slate-200 rounded-2xl p-6 flex flex-col justify-between shrink-0 shadow-xs ${
-          fullScreen ? 'w-80 h-full border-r border-y-0 rounded-none' : 'w-full lg:w-80'
+        <aside className={`bg-white border border-slate-200 rounded-xl lg:rounded-2xl p-4 sm:p-6 flex flex-col justify-between shrink-0 shadow-xs ${
+          fullScreen ? 'w-full lg:w-80 lg:h-full lg:border-r lg:border-y-0 lg:rounded-none max-h-[48vh] lg:max-h-none overflow-hidden' : 'w-full lg:w-80'
         }`}>
           <div className="space-y-6 overflow-y-auto pr-1 flex-1">
             
             {/* Header: Title and Settings */}
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+            <div className="flex items-center justify-between gap-3 pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2">
                 <Calendar className="h-6 w-6 text-indigo-600" />
-                <span className="font-bold text-lg text-slate-900 tracking-tight">Builder Options</span>
+                <span className="font-bold text-base sm:text-lg text-slate-900 tracking-tight">Builder Options</span>
               </div>
               <button 
                 type="button"
@@ -85,7 +85,7 @@ export default function ScheduleBuilder({ variant, fullScreen = false }: Schedul
                   <p className="mt-1">Click the button above or a calendar grid cell to get started.</p>
                 </div>
               ) : (
-                <div className="space-y-2 max-h-[300px] overflow-y-auto pr-1">
+                <div className="space-y-2 max-h-44 sm:max-h-[300px] overflow-y-auto pr-1">
                   {events.map((event) => {
                     const displayColor = event.color || '#4f46e5';
                     return (
@@ -120,7 +120,10 @@ export default function ScheduleBuilder({ variant, fullScreen = false }: Schedul
         </aside>
 
         {/* MAIN CALENDAR GRID VIEW */}
-        <main className={`flex-1 flex flex-col ${fullScreen ? 'h-full overflow-y-auto p-6' : 'space-y-8'}`}>
+        <main className={`flex-1 flex flex-col min-w-0 ${fullScreen ? 'h-full overflow-y-auto p-3 sm:p-6' : 'space-y-8'}`}>
+          <div className="lg:hidden rounded-lg border border-indigo-100 bg-indigo-50 px-3 py-2 text-[11px] font-semibold text-indigo-900">
+            Swipe the schedule left and right to view all days. Tap an empty time slot to add an event.
+          </div>
           <div className="flex-1">
             <ScheduleGrid />
           </div>
