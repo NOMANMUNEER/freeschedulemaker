@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { Calendar, Mail } from 'lucide-react';
+import ContactForm from '../../components/common/ContactForm';
 
 export const metadata: Metadata = {
   title: 'Contact Us | FreeScheduleMaker',
@@ -32,6 +33,8 @@ export default function ContactPage() {
           <p className="text-lg">Have feedback, a feature request, or a question about using our <strong>free online schedule maker</strong>? We are happy to hear from you.</p>
           
           <p>FreeScheduleMaker is built for students, teams, managers, and anyone who needs a simple way to create weekly schedules, class timetables, work rotas, and shift plans without signing up.</p>
+
+          <ContactForm />
 
           <div className="bg-indigo-50 p-6 rounded-xl border border-indigo-100 mt-8 text-center">
             <h3 className="font-bold text-indigo-900 text-lg mb-2">Before you contact us</h3>

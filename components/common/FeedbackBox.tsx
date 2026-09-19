@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { ThumbsUp, ThumbsDown, CheckCircle, MessageSquare } from 'lucide-react';
+import { logEvent } from '../../lib/analytics';
 
 type Step = 'rating' | 'intent' | 'feature' | 'thanks';
 
@@ -10,6 +11,8 @@ export default function FeedbackBox() {
   const [isUseful, setIsUseful] = useState<boolean | null>(null);
   const [creationIntent, setCreationIntent] = useState<string>('');
   const [featureSuggestion, setFeatureSuggestion] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   const handleRating = (useful: boolean) => {
     setIsUseful(useful);
@@ -21,8 +24,10 @@ export default function FeedbackBox() {
     setStep('feature');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitError('');
     
     const feedbackData = {
       isUseful,
@@ -31,18 +36,21 @@ export default function FeedbackBox() {
       timestamp: new Date().toISOString(),
     };
 
-    // Save to localStorage & console.log
     try {
-      const stored = localStorage.getItem('schedule_builder_feedback');
-      const allFeedback = stored ? JSON.parse(stored) : [];
-      allFeedback.push(feedbackData);
-      localStorage.setItem('schedule_builder_feedback', JSON.stringify(allFeedback));
+      const response = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'feedback', ...feedbackData, page: window.location.pathname }),
+      });
+      if (!response.ok) throw new Error('Feedback delivery failed');
+      logEvent('submit_feedback', 'engagement', creationIntent);
+      setStep('thanks');
     } catch (err) {
-      console.error('Failed to save feedback to localStorage', err);
+      console.error('Failed to submit feedback', err);
+      setSubmitError('We could not send your feedback. Please try again in a moment.');
+    } finally {
+      setIsSubmitting(false);
     }
-
-    console.log('Feedback submitted:', feedbackData);
-    setStep('thanks');
   };
 
   const options = [
@@ -122,6 +130,8 @@ export default function FeedbackBox() {
             className="w-full border border-slate-200 hover:border-slate-350 focus:border-indigo-500 bg-slate-50/50 rounded-xl p-3 text-xs text-slate-800 outline-hidden resize-none transition"
           />
 
+          {submitError && <p role="alert" className="text-center text-xs text-rose-600">{submitError}</p>}
+
           <div className="flex justify-center gap-3">
             <button
               type="button"
@@ -132,9 +142,10 @@ export default function FeedbackBox() {
             </button>
             <button
               type="submit"
+              disabled={isSubmitting}
               className="px-6 py-2 bg-indigo-600 text-white font-bold rounded-xl text-xs hover:bg-indigo-700 transition cursor-pointer"
             >
-              Submit Feedback
+              {isSubmitting ? 'Sending...' : 'Submit Feedback'}
             </button>
           </div>
         </form>

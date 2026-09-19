@@ -33,6 +33,9 @@ export default function PrivacyPolicy() {
           
           <p>At FreeScheduleMaker, one of our main priorities is the privacy of our visitors. This Privacy Policy explains the types of information collected and recorded by FreeScheduleMaker and how we use it.</p>
 
+          <h2 className="text-xl font-bold text-slate-900 mt-8 mb-4">Contact and feedback forms</h2>
+          <p>When you contact us, we collect the name, email address, and message you choose to provide so that we can respond. When you submit builder feedback, we collect the feedback and the schedule type you select to improve the tool. We do not sell this information.</p>
+
           <h2 className="text-xl font-bold text-slate-900 mt-8 mb-4">Log Files</h2>
           <p>FreeScheduleMaker follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and a part of hosting services analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks.</p>
 
