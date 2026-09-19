@@ -10,9 +10,10 @@ export default function ContactForm() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const formElement = event.currentTarget;
     setStatus('sending');
     setError('');
-    const form = new FormData(event.currentTarget);
+    const form = new FormData(formElement);
 
     try {
       const response = await fetch('/api/leads', {
@@ -32,7 +33,7 @@ export default function ContactForm() {
       if (!response.ok) throw new Error(result.error || 'Unable to send your message.');
       setStatus('success');
       logEvent('generate_lead', 'contact', 'contact_form');
-      event.currentTarget.reset();
+      formElement.reset();
     } catch (submissionError) {
       setError(submissionError instanceof Error ? submissionError.message : 'Unable to send your message.');
       setStatus('error');
