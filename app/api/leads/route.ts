@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 type LeadPayload = {
-  type: 'contact' | 'feedback';
+  type: 'contact' | 'feedback' | 'tool_lead';
   name?: string;
   email?: string;
   subject?: string;
@@ -9,6 +9,7 @@ type LeadPayload = {
   isUseful?: boolean | null;
   creationIntent?: string;
   page?: string;
+  source?: string;
   website?: string;
 };
 
@@ -38,16 +39,20 @@ export async function POST(request: Request) {
   const message = clean(body.message, MAX_MESSAGE_LENGTH);
   const creationIntent = clean(body.creationIntent);
   const page = clean(body.page, 500);
+  const source = clean(body.source);
 
   // Quietly accept honeypot submissions without sending mail.
   if (clean(body.website)) return NextResponse.json({ ok: true });
 
-  if (type !== 'contact' && type !== 'feedback') {
+  if (type !== 'contact' && type !== 'feedback' && type !== 'tool_lead') {
     return NextResponse.json({ error: 'Invalid submission.' }, { status: 400 });
   }
 
   if (type === 'contact' && (!name || !email || !message || !/^\S+@\S+\.\S+$/.test(email))) {
     return NextResponse.json({ error: 'Please add your name, a valid email address, and a message.' }, { status: 400 });
+  }
+  if (type === 'tool_lead' && (!email || !creationIntent || !/^\S+@\S+\.\S+$/.test(email))) {
+    return NextResponse.json({ error: 'Please choose an option and enter a valid email address.' }, { status: 400 });
   }
 
   const apiKey = process.env.RESEND_API_KEY;
@@ -69,9 +74,13 @@ export async function POST(request: Request) {
 
   const emailSubject = type === 'contact'
     ? `Contact lead: ${subject || 'General inquiry'}`
+    : type === 'tool_lead'
+      ? 'New FreeScheduleMaker Lead'
     : `Builder feedback: ${creationIntent || 'No schedule type selected'}`;
   const text = type === 'contact'
     ? [`Name: ${name}`, `Email: ${email}`, `Page: ${page || 'Not provided'}`, '', message].join('\n')
+    : type === 'tool_lead'
+      ? [`Email: ${email}`, `Intent: ${creationIntent}`, `Tool/page: ${page || 'Not provided'}`, `Source: ${source || 'Not provided'}`, `Time: ${new Date().toISOString()}`, '', `Message: ${message || 'Not provided'}`].join('\n')
     : feedbackSummary;
 
   try {
@@ -81,7 +90,7 @@ export async function POST(request: Request) {
       body: JSON.stringify({
         from,
         to: [recipient],
-        reply_to: type === 'contact' ? email : undefined,
+        reply_to: type === 'contact' || type === 'tool_lead' ? email : undefined,
         subject: emailSubject,
         text,
       }),

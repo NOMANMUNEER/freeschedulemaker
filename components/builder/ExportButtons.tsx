@@ -5,7 +5,9 @@ import { useScheduleStore } from '../../store/useScheduleStore';
 import { exportScheduleToPDF, exportScheduleToPNG } from '../../lib/exportSchedule';
 import { Download, FileText, Loader2 } from 'lucide-react';
 
-export default function ExportButtons() {
+type ExportButtonsProps = { onSuccessfulExport?: () => void };
+
+export default function ExportButtons({ onSuccessfulExport }: ExportButtonsProps) {
   const { clearSchedule, currentVariant } = useScheduleStore();
   const [isExporting, setIsExporting] = useState(false);
   const [isPdfExporting, setIsPdfExporting] = useState(false);
@@ -15,6 +17,7 @@ export default function ExportButtons() {
     try {
       const fileName = `${currentVariant}_schedule.png`;
       await exportScheduleToPNG('schedule-grid', fileName);
+      onSuccessfulExport?.();
     } catch {
       alert('Failed to download schedule image. Please try again.');
     } finally {
@@ -26,6 +29,7 @@ export default function ExportButtons() {
     setIsPdfExporting(true);
     try {
       await exportScheduleToPDF('schedule-grid', `${currentVariant.replace(/_/g, ' ')} schedule`);
+      onSuccessfulExport?.();
     } catch {
       alert('Failed to prepare PDF. Please allow popups and try again.');
     } finally {

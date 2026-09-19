@@ -10,6 +10,8 @@ import AddEventModal from './AddEventModal';
 import TemplateSelector from './TemplateSelector';
 import ExportButtons from './ExportButtons';
 import FeedbackBox from '../common/FeedbackBox';
+import LeadCaptureModal from '../common/LeadCaptureModal';
+import { LEAD_CAPTURE_CONFIG } from '../../config/leadCapture';
 import { Calendar, Plus, Settings, Sparkles } from 'lucide-react';
 
 type ScheduleBuilderProps = {
@@ -21,6 +23,7 @@ export default function ScheduleBuilder({ variant, fullScreen = false }: Schedul
   const { events, removeEvent, switchVariant, currentVariant } = useScheduleStore();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isAddEventOpen, setIsAddEventOpen] = useState(false);
+  const [isLeadCaptureOpen, setIsLeadCaptureOpen] = useState(false);
 
   // Switch state variant on mount/change
   useEffect(() => {
@@ -28,6 +31,12 @@ export default function ScheduleBuilder({ variant, fullScreen = false }: Schedul
   }, [variant, switchVariant]);
 
   const config = BUILDER_VARIANTS[currentVariant] || BUILDER_VARIANTS.default;
+
+  const showLeadCapture = () => {
+    if (typeof window !== 'undefined' && !localStorage.getItem(LEAD_CAPTURE_CONFIG.storageKey)) {
+      setIsLeadCaptureOpen(true);
+    }
+  };
 
   return (
     <div className={`w-full bg-slate-50 text-slate-900 ${fullScreen ? 'min-h-screen lg:h-screen flex overflow-hidden' : 'py-5 px-3 sm:py-8 sm:px-6 lg:px-8 max-w-7xl mx-auto'}`}>
@@ -115,7 +124,7 @@ export default function ScheduleBuilder({ variant, fullScreen = false }: Schedul
 
           {/* Action Buttons Section */}
           <div className="pt-4 border-t border-slate-100 mt-6">
-            <ExportButtons />
+            <ExportButtons onSuccessfulExport={showLeadCapture} />
           </div>
         </aside>
 
@@ -144,6 +153,7 @@ export default function ScheduleBuilder({ variant, fullScreen = false }: Schedul
       {isAddEventOpen && (
         <AddEventModal isOpen={isAddEventOpen} onClose={() => setIsAddEventOpen(false)} />
       )}
+      {isLeadCaptureOpen && <LeadCaptureModal page={window.location.pathname} onClose={() => setIsLeadCaptureOpen(false)} />}
     </div>
   );
 }
