@@ -27,6 +27,7 @@ export const FOOTER_NAV_LINKS: NavItem[] = [
 ];
 
 export const FOOTER_TOOL_LINKS: NavItem[] = [
+  { label: 'Wedding Day Timeline', href: '/wedding-day-timeline-maker' },
   { label: 'Free Schedule Maker', href: '/' },
   { label: 'All Scheduling Tools', href: '/tools' },
   { label: 'Weekly Schedule Maker', href: '/weekly-schedule-maker' },

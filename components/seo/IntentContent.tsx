@@ -10,7 +10,7 @@ type IntentBlock = {
   }[];
 };
 
-const CONTENT: Record<BuilderVariantId, IntentBlock> = {
+const CONTENT: Record<string, IntentBlock> = {
   default: {
     heading: 'A Free Online Schedule Maker for School, Work, and Personal Planning',
     intro: 'FreeScheduleMaker helps you turn scattered tasks, classes, appointments, and shifts into a clean visual timetable. It is designed for people searching for a free schedule maker online without spreadsheets, signups, or paid templates.',

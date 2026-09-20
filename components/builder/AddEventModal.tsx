@@ -115,13 +115,14 @@ export default function AddEventModal({ isOpen, onClose, initialDay, initialTime
     onClose();
   };
 
-  const generateHourOptions = () => {
-    const hours = [];
-    // Standard timetable hours
-    for (let i = 0; i <= 23; i++) {
-      hours.push(i.toString().padStart(2, '0'));
+  const generateTimeOptions = () => {
+    const times = [];
+    for (let minutes = 0; minutes <= 24 * 60; minutes += settings.lineSpacing) {
+      const hour = Math.floor(minutes / 60);
+      const minute = minutes % 60;
+      times.push(`${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`);
     }
-    return hours;
+    return times;
   };
 
   return (
@@ -253,14 +254,14 @@ export default function AddEventModal({ isOpen, onClose, initialDay, initialTime
               {/* Start Dropdown */}
               {showStartDropdown && (
                 <div className="absolute left-10 top-24 sm:top-11 bg-white border border-slate-300 shadow-xl rounded-md max-h-48 overflow-y-auto w-28 z-[350]">
-                  {generateHourOptions().map((hr) => (
+                  {generateTimeOptions().map((time) => (
                     <button
-                      key={hr}
+                      key={time}
                       type="button"
-                      onClick={() => { setStartTime(`${hr}:00`); setShowStartDropdown(false); }}
+                      onClick={() => { setStartTime(time); setShowStartDropdown(false); }}
                       className="w-full text-left px-4 py-1.5 text-xs hover:bg-indigo-600 hover:text-white"
                     >
-                      {hr}:00
+                      {time}
                     </button>
                   ))}
                 </div>
@@ -269,14 +270,14 @@ export default function AddEventModal({ isOpen, onClose, initialDay, initialTime
               {/* End Dropdown */}
               {showEndDropdown && (
                 <div className="absolute right-0 top-24 sm:top-11 bg-white border border-slate-300 shadow-xl rounded-md max-h-48 overflow-y-auto w-28 z-[350]">
-                  {generateHourOptions().map((hr) => (
+                  {generateTimeOptions().map((time) => (
                     <button
-                      key={hr}
+                      key={time}
                       type="button"
-                      onClick={() => { setEndTime(`${hr}:00`); setShowEndDropdown(false); }}
+                      onClick={() => { setEndTime(time); setShowEndDropdown(false); }}
                       className="w-full text-left px-4 py-1.5 text-xs hover:bg-indigo-600 hover:text-white"
                     >
-                      {hr}:00
+                      {time}
                     </button>
                   ))}
                 </div>

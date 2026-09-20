@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 const SEARCH_INTENTS = [
+  { title: 'Wedding Day Timeline Template', body: 'Build a free, editable wedding day itinerary with a ready-made ceremony, portraits, dinner, and dancing schedule.', href: '/wedding-day-timeline-maker', linkLabel: 'Create a wedding timeline' },
   {
     title: 'Free Online Schedule Maker',
     body: 'Create a schedule online for classes, work shifts, study blocks, appointments, workouts, and routines. FreeScheduleMaker gives you a visual timetable you can edit, color-code, and download without creating an account.',

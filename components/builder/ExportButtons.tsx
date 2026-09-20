@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useScheduleStore } from '../../store/useScheduleStore';
 import { exportScheduleToPDF, exportScheduleToPNG } from '../../lib/exportSchedule';
 import { Download, FileText, Loader2 } from 'lucide-react';
+import { logEvent } from '../../lib/analytics';
 
 type ExportButtonsProps = { onSuccessfulExport?: () => void };
 
@@ -14,6 +15,7 @@ export default function ExportButtons({ onSuccessfulExport }: ExportButtonsProps
 
   const handleDownload = async () => {
     setIsExporting(true);
+    logEvent('schedule_export_clicked', 'engagement', 'png', undefined, { tool_page: window.location.pathname });
     try {
       const fileName = `${currentVariant}_schedule.png`;
       await exportScheduleToPNG('schedule-grid', fileName);
@@ -27,6 +29,7 @@ export default function ExportButtons({ onSuccessfulExport }: ExportButtonsProps
 
   const handleSavePDF = async () => {
     setIsPdfExporting(true);
+    logEvent('schedule_export_clicked', 'engagement', 'pdf', undefined, { tool_page: window.location.pathname });
     try {
       await exportScheduleToPDF('schedule-grid', `${currentVariant.replace(/_/g, ' ')} schedule`);
       onSuccessfulExport?.();

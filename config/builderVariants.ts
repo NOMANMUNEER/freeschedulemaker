@@ -120,4 +120,9 @@ export const BUILDER_VARIANTS: Record<BuilderVariantId, BuilderVariantConfig> = 
     suggestedCategories: ['High Priority', 'Medium Priority', 'Low Priority', 'Math', 'Science', 'History', 'Languages', 'Practice Exam'],
     relatedTools: ['university', 'weekly', 'default'],
   },
+  wedding: {
+    id: 'wedding', title: 'Wedding Day Timeline', description: 'Create a clear, printable wedding-day plan for your people and vendors.', audience: 'Couples & wedding vendors', defaultEventTitle: 'Timeline event', primaryActionLabel: 'Add Timeline Event', templateType: 'wedding',
+    eventLabels: { title: 'Timeline event', person: 'Who is involved', location: 'Venue or location', category: 'Part of the day' },
+    suggestedCategories: ['Getting Ready', 'Photos', 'Ceremony', 'Cocktail Hour', 'Reception', 'Buffer Time'], relatedTools: ['weekly', 'default', 'rota'],
+  },
 };

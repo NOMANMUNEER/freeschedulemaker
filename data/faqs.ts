@@ -5,7 +5,7 @@ export interface FAQItem {
   answer: string;
 }
 
-export const FAQS: Record<BuilderVariantId, FAQItem[]> = {
+export const FAQS: Record<string, FAQItem[]> = {
   default: [
     {
       question: "Is this Schedule Maker really free?",

@@ -7,7 +7,7 @@ import AddEventModal from './AddEventModal';
 
 export default function ScheduleGrid() {
   const { events, settings } = useScheduleStore();
-  const { visibleDays, startHour, endHour, clockType } = settings;
+  const { visibleDays, startHour, endHour, clockType, lineSpacing } = settings;
 
   // Add state for the grid's modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,24 +23,33 @@ export default function ScheduleGrid() {
     if (clockType === '24-Hour') {
       return `${hour.toString().padStart(2, '0')}:00`;
     }
-    const ampm = hour >= 12 ? 'PM' : 'AM';
-    const displayHour = hour % 12 === 0 ? 12 : hour % 12;
+    const normalizedHour = hour % 24;
+    const ampm = normalizedHour >= 12 ? 'PM' : 'AM';
+    const displayHour = normalizedHour % 12 === 0 ? 12 : normalizedHour % 12;
     return `${displayHour.toString().padStart(2, '0')} ${ampm}`;
   };
 
   // Generate rows array dynamically based on start/end hour settings
   const timeSlots = [];
-  for (let i = startHour; i <= endHour; i++) {
+  for (let minutes = startHour * 60; minutes <= endHour * 60; minutes += lineSpacing) {
+    const i = Math.floor(minutes / 60);
+    const minute = minutes % 60;
     timeSlots.push({
-      label: formatHourLabel(i),
-      value: `${i.toString().padStart(2, '0')}:00`,
+      label: minute === 0 ? formatHourLabel(i) : '',
+      value: `${i.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`,
     });
   }
 
   const getEventForSlot = (day: string, time: string) => {
+    const [hour, minute] = time.split(':').map(Number);
+    const slotStart = hour * 60 + minute;
     return events.find((event) => {
       const isSameDay = event.days.includes(day);
-      const isSameTime = event.startTime === time;
+      const [eventHour, eventMinute] = event.startTime.split(':').map(Number);
+      const eventStart = eventHour * 60 + eventMinute;
+      // Events not aligned to the selected grid increment (for example 2:20 PM)
+      // appear in the slot that contains their start time.
+      const isSameTime = eventStart >= slotStart && eventStart < slotStart + lineSpacing;
       return isSameDay && isSameTime;
     });
   };
@@ -72,7 +81,7 @@ export default function ScheduleGrid() {
           <div 
             key={slot.value} 
             style={gridTemplateColumns} 
-            className="grid border-b border-slate-200 last:border-b-0 h-24"
+            className={`grid border-b border-slate-200 last:border-b-0 ${lineSpacing === 60 ? 'h-24' : lineSpacing === 30 ? 'h-14' : 'h-8'}`}
           >
             {/* Time Column */}
             <div className="flex flex-col justify-center items-center font-bold text-xs text-indigo-950 bg-slate-50 border-r border-slate-200 p-2 select-none sticky left-0 z-10">

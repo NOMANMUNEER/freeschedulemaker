@@ -5,7 +5,8 @@ export type BuilderVariantId =
   | 'rota'
   | 'employee'
   | 'shift'
-  | 'revision';
+  | 'revision'
+  | 'wedding';
 
 export type ScheduleEvent = {
   id: string;

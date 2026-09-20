@@ -19,6 +19,7 @@ export const metadata: Metadata = {
 };
 
 const TEMPLATES = [
+  { title: 'Wedding Day Timeline Template', href: '/wedding-day-timeline-maker', accent: 'bg-pink-500', description: 'An editable wedding itinerary for getting ready, portraits, ceremony, dinner, dancing, and the send-off.', blocks: ['Hair & Makeup', 'Photos', 'Ceremony', 'Cocktails', 'Dinner', 'Dancing'], tips: ['Work backward from your ceremony time.', 'Leave short buffers for travel and photos.'] },
   {
     title: 'Weekly Planner Template',
     href: '/weekly-schedule-maker',
@@ -70,6 +71,7 @@ const TEMPLATES = [
 ];
 
 const PRINTABLE_TEMPLATES = [
+  { title: 'Printable Wedding Day Timeline', description: 'Create a vendor-friendly wedding itinerary with a ceremony, photo, reception, and send-off plan.', format: 'Best layout: Saturday, 6:00 AM to midnight', href: '/wedding-day-timeline-maker' },
   {
     title: 'Printable Weekly Planner',
     description: 'Use this for weekly routines, meal planning, errands, work blocks, chores, and a Sunday reset.',

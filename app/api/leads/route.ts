@@ -10,6 +10,7 @@ type LeadPayload = {
   creationIntent?: string;
   page?: string;
   source?: string;
+  role?: string;
   website?: string;
 };
 
@@ -40,6 +41,7 @@ export async function POST(request: Request) {
   const creationIntent = clean(body.creationIntent);
   const page = clean(body.page, 500);
   const source = clean(body.source);
+  const role = clean(body.role);
 
   // Quietly accept honeypot submissions without sending mail.
   if (clean(body.website)) return NextResponse.json({ ok: true });
@@ -53,6 +55,9 @@ export async function POST(request: Request) {
   }
   if (type === 'tool_lead' && (!email || !creationIntent || !/^\S+@\S+\.\S+$/.test(email))) {
     return NextResponse.json({ error: 'Please choose an option and enter a valid email address.' }, { status: 400 });
+  }
+  if (type === 'tool_lead' && page.includes('wedding-day-timeline-maker') && !role) {
+    return NextResponse.json({ error: 'Please select your role.' }, { status: 400 });
   }
 
   const apiKey = process.env.RESEND_API_KEY;
@@ -80,7 +85,7 @@ export async function POST(request: Request) {
   const text = type === 'contact'
     ? [`Name: ${name}`, `Email: ${email}`, `Page: ${page || 'Not provided'}`, '', message].join('\n')
     : type === 'tool_lead'
-      ? [`Email: ${email}`, `Intent: ${creationIntent}`, `Tool/page: ${page || 'Not provided'}`, `Source: ${source || 'Not provided'}`, `Time: ${new Date().toISOString()}`, '', `Message: ${message || 'Not provided'}`].join('\n')
+      ? [`Email: ${email}`, `Role: ${role || 'Not provided'}`, `Intent: ${creationIntent}`, `Tool/page: ${page || 'Not provided'}`, `Source: ${source || 'Not provided'}`, `Time: ${new Date().toISOString()}`, '', `Message: ${message || 'Not provided'}`].join('\n')
     : feedbackSummary;
 
   try {

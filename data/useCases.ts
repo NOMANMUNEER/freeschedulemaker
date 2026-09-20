@@ -5,7 +5,7 @@ export interface UseCaseItem {
   description: string;
 }
 
-export const USE_CASES: Record<BuilderVariantId, UseCaseItem[]> = {
+export const USE_CASES: Record<string, UseCaseItem[]> = {
   default: [
     { title: 'Personal Daily Routines', description: 'Schedule gym sessions, meal plans, chores, and personal habits into a beautiful color-coded daily grid.' },
     { title: 'Small Business Rota', description: 'Plan shift rotations, front-desk staffing hours, and team coverage for retail and service shops.' },

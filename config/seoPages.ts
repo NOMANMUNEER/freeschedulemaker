@@ -18,7 +18,7 @@ export interface SEOPageData {
   faqIntroduction: string;
 }
 
-export const SEO_PAGES: Record<BuilderVariantId, SEOPageData> = {
+export const SEO_PAGES: Record<string, SEOPageData> = {
   default: {
     variantId: 'default',
     metaTitle: 'Free Schedule Maker Online | Free Schedule Builder',
