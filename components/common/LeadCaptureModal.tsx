@@ -1,140 +1,39 @@
 'use client';
 
-import { FormEvent, useEffect, useState } from 'react';
-import { CheckCircle2, ChevronRight, X } from 'lucide-react';
+import { FormEvent, KeyboardEvent as ReactKeyboardEvent, useEffect, useRef, useState } from 'react';
+import { CheckCircle2, ChevronRight, Mail, ShieldCheck, Sparkles, X } from 'lucide-react';
 import { LEAD_CAPTURE_CONFIG, LEAD_INTENTS } from '../../config/leadCapture';
 import { trackFunnelEvent } from '../../lib/analytics';
 
-type LeadCaptureModalProps = {
-  page: string;
-  variant?: string;
-  builderVariant: string;
-  exportFormat: 'png' | 'pdf';
-  onClose: () => void;
-};
+type Props = { page: string; variant?: string; builderVariant: string; exportFormat: 'png' | 'pdf'; onClose: () => void };
 
-export default function LeadCaptureModal({ page, variant, builderVariant, exportFormat, onClose }: LeadCaptureModalProps) {
-  const [step, setStep] = useState<1 | 2 | 3>(1);
-  const [intent, setIntent] = useState('');
-  const [status, setStatus] = useState<'idle' | 'sending' | 'error'>('idle');
-  const [error, setError] = useState('');
-  const [role, setRole] = useState('');
-  const [formStarted, setFormStarted] = useState(false);
-  const isWedding = variant === 'wedding';
+export default function LeadCaptureModal({ page, variant, builderVariant, exportFormat, onClose }: Props) {
+  const [step, setStep] = useState<1 | 2 | 3>(1); const [intent, setIntent] = useState(''); const [status, setStatus] = useState<'idle' | 'sending' | 'error'>('idle'); const [error, setError] = useState(''); const [role, setRole] = useState(''); const [formStarted, setFormStarted] = useState(false);
+  const dialogRef = useRef<HTMLElement>(null); const returnFocusRef = useRef<HTMLElement | null>(null); const isWedding = variant === 'wedding';
   const context = { builderVariant, pagePath: page, intentSegment: variant, exportFormat };
-
   useEffect(() => {
-    const closeOnEscape = (event: KeyboardEvent) => { if (event.key === 'Escape') handleClose('escape'); };
-    window.addEventListener('keydown', closeOnEscape);
-    return () => window.removeEventListener('keydown', closeOnEscape);
-  // The dialog intentionally registers this once when it opens.
+    returnFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; dialogRef.current?.focus(); trackFunnelEvent('lead_modal_viewed', context, { offer_segment: variant || 'default' });
+    const closeOnEscape = (event: globalThis.KeyboardEvent) => { if (event.key === 'Escape') close('escape'); };
+    window.addEventListener('keydown', closeOnEscape); return () => { window.removeEventListener('keydown', closeOnEscape); returnFocusRef.current?.focus(); };
+  // This intentionally runs once for each modal session.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  function handleClose(method: 'close_button' | 'overlay' | 'escape' | 'other' = 'other') {
-    localStorage.setItem(LEAD_CAPTURE_CONFIG.storageKey, 'dismissed');
-    trackFunnelEvent('lead_modal_dismissed', context, { dismissal_method: method, selected_intent: intent || 'not_selected' });
-    onClose();
+  function close(method: 'close_button' | 'overlay' | 'escape' | 'other' = 'other') { localStorage.setItem(LEAD_CAPTURE_CONFIG.storageKey, 'dismissed'); trackFunnelEvent('lead_modal_dismissed', context, { dismissal_method: method, selected_intent: intent || 'not_selected' }); onClose(); }
+  function select(value: string) { setIntent(value); setStep(2); trackFunnelEvent('lead_intent_selected', { ...context, intentSegment: value }, { selected_intent: value, ...(isWedding ? { selection_type: 'role' } : {}) }); if (isWedding) setRole(value); }
+  function startForm() { if (!formStarted) { setFormStarted(true); trackFunnelEvent('lead_form_started', { ...context, intentSegment: intent }); } }
+  function trapFocus(event: ReactKeyboardEvent<HTMLElement>) { if (event.key !== 'Tab' || !dialogRef.current) return; const items = dialogRef.current.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([disabled]), textarea:not([disabled]), a[href]'); if (!items.length) { event.preventDefault(); return; } const first = items[0]; const last = items[items.length - 1]; if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); } if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); } }
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault(); const form = new FormData(event.currentTarget); const emailValue = form.get('email'); const email = typeof emailValue === 'string' ? emailValue.trim() : '';
+    if (!email) { trackFunnelEvent('lead_form_validation_error', { ...context, intentSegment: intent }, { field: 'email', validation_type: 'required' }); setStatus('error'); setError('Please enter your email address.'); return; }
+    if (!/^\S+@\S+\.\S+$/.test(email)) { trackFunnelEvent('lead_form_validation_error', { ...context, intentSegment: intent }, { field: 'email', validation_type: 'format' }); setStatus('error'); setError('Please enter a valid email address.'); return; }
+    setStatus('sending'); setError(''); trackFunnelEvent('lead_submission_started', { ...context, intentSegment: intent });
+    try { const response = await fetch('/api/leads', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'tool_lead', email, message: form.get('message'), creationIntent: intent, role, page, source: LEAD_CAPTURE_CONFIG.source, website: form.get('website') }) }); await response.json().catch(() => ({})); if (!response.ok) { const err = new Error('Unable to send your request.') as Error & { status?: number }; err.status = response.status; throw err; } localStorage.setItem(LEAD_CAPTURE_CONFIG.storageKey, 'submitted'); trackFunnelEvent('lead_submitted', { ...context, intentSegment: intent }, { source: LEAD_CAPTURE_CONFIG.source }); setStep(3); }
+    catch (failure) { setError(failure instanceof Error ? failure.message : 'Unable to send your request.'); setStatus('error'); const httpStatus = failure && typeof failure === 'object' && 'status' in failure && typeof failure.status === 'number' ? failure.status : undefined; trackFunnelEvent('lead_submission_failed', { ...context, intentSegment: intent }, { http_status: httpStatus, safe_error_category: httpStatus ? 'http_error' : 'network_or_response_error' }); }
   }
-
-  function chooseIntent(selectedIntent: string) {
-    setIntent(selectedIntent);
-    setStep(2);
-    trackFunnelEvent('lead_intent_selected', { ...context, intentSegment: selectedIntent }, { selected_intent: selectedIntent });
-  }
-
-  function chooseRole(selectedRole: string) {
-    setRole(selectedRole); setIntent(selectedRole); setStep(2);
-    trackFunnelEvent('lead_intent_selected', { ...context, intentSegment: selectedRole }, { selected_intent: selectedRole, selection_type: 'role' });
-  }
-
-  function handleFormFocus() {
-    if (formStarted) return;
-    setFormStarted(true);
-    trackFunnelEvent('lead_form_started', { ...context, intentSegment: intent });
-  }
-
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const form = new FormData(event.currentTarget);
-    const emailEntry = form.get('email');
-    const email = typeof emailEntry === 'string' ? emailEntry.trim() : '';
-    if (!email) {
-      trackFunnelEvent('lead_form_validation_error', { ...context, intentSegment: intent }, { field: 'email', validation_type: 'required' });
-      setStatus('error'); setError('Please enter your email address.'); return;
-    }
-    if (!/^\S+@\S+\.\S+$/.test(email)) {
-      trackFunnelEvent('lead_form_validation_error', { ...context, intentSegment: intent }, { field: 'email', validation_type: 'format' });
-      setStatus('error'); setError('Please enter a valid email address.'); return;
-    }
-    setStatus('sending');
-    setError('');
-    trackFunnelEvent('lead_submission_started', { ...context, intentSegment: intent });
-
-    try {
-      const response = await fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          type: 'tool_lead',
-          email,
-          message: form.get('message'),
-          creationIntent: intent,
-          role,
-          page,
-          source: LEAD_CAPTURE_CONFIG.source,
-          website: form.get('website'),
-        }),
-      });
-      const result = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        const error = new Error('Unable to send your request.') as Error & { status?: number };
-        error.status = response.status;
-        throw error;
-      }
-      localStorage.setItem(LEAD_CAPTURE_CONFIG.storageKey, 'submitted');
-      trackFunnelEvent('lead_submitted', { ...context, intentSegment: intent }, { source: LEAD_CAPTURE_CONFIG.source });
-      setStep(3);
-    } catch (submissionError) {
-      const message = submissionError instanceof Error ? submissionError.message : 'Unable to send your request.';
-      setError(message);
-      setStatus('error');
-      const statusCode = submissionError && typeof submissionError === 'object' && 'status' in submissionError && typeof submissionError.status === 'number' ? submissionError.status : undefined;
-      trackFunnelEvent('lead_submission_failed', { ...context, intentSegment: intent }, { http_status: statusCode, safe_error_category: statusCode ? 'http_error' : 'network_or_response_error' });
-    }
-  }
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-slate-950/45 p-4 sm:items-center" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) handleClose('overlay'); }}>
-      <section role="dialog" aria-modal="true" aria-labelledby="lead-capture-title" className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex gap-1" aria-label={`Step ${Math.min(step, 2)} of 2`}><span className="h-1.5 w-8 rounded-full bg-indigo-600" /><span className={`h-1.5 w-8 rounded-full ${step >= 2 ? 'bg-indigo-600' : 'bg-slate-200'}`} /></div>
-          <button type="button" onClick={() => handleClose('close_button')} className="-mt-2 -mr-2 rounded-lg p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-800" aria-label="Close"><X className="h-5 w-5" /></button>
-        </div>
-
-        {step === 1 && <div className="pt-5">
-          <h2 id="lead-capture-title" className="text-2xl font-bold tracking-tight text-slate-900">Need more from your schedule?</h2>
-          <p className="mt-2 text-sm leading-relaxed text-slate-600">{isWedding ? 'Need a polished timeline for your wedding or vendor team?' : 'We can help create a custom scheduling solution for your school, business, team, or personal workflow.'}</p>
-          <p className="mt-6 text-sm font-bold text-slate-800">What are you looking for?</p>
-          <div className="mt-3 grid gap-2">
-            {(isWedding ? ['Couple', 'Wedding planner or coordinator', 'Photographer or videographer', 'DJ or band', 'Venue', 'Other'] : LEAD_INTENTS).map((option) => <button key={option} type="button" onClick={() => isWedding ? chooseRole(option) : chooseIntent(option)} className="flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3 text-left text-sm font-semibold text-slate-700 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-800">{option}<ChevronRight className="h-4 w-4" /></button>)}
-          </div>
-        </div>}
-
-        {step === 2 && <form onSubmit={handleSubmit} className="pt-5" noValidate>
-          <button type="button" onClick={() => setStep(1)} className="text-xs font-semibold text-indigo-600 hover:underline">← Change selection</button>
-          <h2 id="lead-capture-title" className="mt-3 text-2xl font-bold tracking-tight text-slate-900">We can help with that.</h2>
-          <p className="mt-2 text-sm text-slate-600">{isWedding && role === 'Couple' ? 'We can help make a done-for-you, polished custom timeline.' : isWedding ? 'We can help with branded timelines and templates for your business.' : 'Tell us a little about what you need.'}</p>
-          <label className="mt-5 block text-sm font-semibold text-slate-700">Email address<input required name="email" type="email" autoComplete="email" onFocus={handleFormFocus} className="mt-1.5 w-full rounded-lg border border-slate-300 p-3 font-normal outline-none focus:border-indigo-500" /></label>
-          <label className="mt-4 block text-sm font-semibold text-slate-700">What do you need? <span className="font-normal text-slate-400">(optional)</span><textarea name="message" rows={4} className="mt-1.5 w-full resize-y rounded-lg border border-slate-300 p-3 font-normal outline-none focus:border-indigo-500" /></label>
-          <input name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
-          <p className="mt-3 text-xs text-slate-500">By submitting, you agree that we may follow up about your request. See our <a href="/privacy-policy" className="text-indigo-600 underline">Privacy Policy</a>.</p>
-          {status === 'error' && <p role="alert" className="mt-3 text-sm text-rose-600">{error}</p>}
-          <button disabled={status === 'sending'} className="mt-5 w-full rounded-lg bg-indigo-600 px-5 py-3 font-bold text-white transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60">{status === 'sending' ? 'Sending…' : 'Get in Touch'}</button>
-        </form>}
-
-        {step === 3 && <div className="py-12 text-center"><CheckCircle2 className="mx-auto h-12 w-12 text-emerald-500" /><h2 id="lead-capture-title" className="mt-4 text-2xl font-bold text-slate-900">Thanks — we’ll be in touch.</h2><p className="mt-2 text-sm text-slate-600">Your request has been sent to the FreeScheduleMaker team.</p><button type="button" onClick={onClose} className="mt-6 text-sm font-bold text-indigo-600 hover:underline">Back to my schedule</button></div>}
-      </section>
-    </div>
-  );
+  const options = isWedding ? ['Couple', 'Wedding planner or coordinator', 'Photographer or videographer', 'DJ or band', 'Venue', 'Other'] : LEAD_INTENTS;
+  return <div className="fixed inset-0 z-[500] flex items-end justify-center bg-slate-950/55 p-3 backdrop-blur-sm sm:items-center sm:p-6" role="presentation" onMouseDown={(e) => { if (e.target === e.currentTarget) close('overlay'); }}><section ref={dialogRef} tabIndex={-1} onKeyDown={trapFocus} role="dialog" aria-modal="true" aria-labelledby="lead-capture-title" className="lead-modal-enter flex max-h-[calc(100dvh-1.5rem)] w-full max-w-lg flex-col overflow-hidden rounded-[1.5rem] border border-white/70 bg-white shadow-[0_28px_80px_rgba(15,23,42,0.32)] outline-none sm:max-h-[calc(100dvh-3rem)]"><header className="border-b border-indigo-100 bg-gradient-to-br from-indigo-50 via-white to-sky-50 px-5 pb-4 pt-5 sm:px-7 sm:pb-5 sm:pt-6"><div className="flex items-start justify-between gap-4"><div className="flex min-w-0 items-center gap-3"><span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-sm"><CheckCircle2 className="h-5 w-5" /></span><div><p className="text-xs font-bold uppercase tracking-[.14em] text-indigo-700">Export complete</p><p className="mt-0.5 text-sm font-medium text-slate-600">An optional next step, if useful.</p></div></div><button type="button" onClick={() => close('close_button')} className="-mr-1 -mt-1 rounded-xl p-2 text-slate-500 transition hover:bg-white hover:text-slate-800" aria-label="Close"><X className="h-5 w-5" /></button></div><div className="mt-5 flex gap-1.5" aria-label={`Step ${Math.min(step, 2)} of 2`}><span className="h-1.5 w-10 rounded-full bg-indigo-600" /><span className={`h-1.5 w-10 rounded-full transition-colors ${step >= 2 ? 'bg-indigo-600' : 'bg-indigo-100'}`} /></div></header>
+    {step === 1 && <div className="lead-modal-step overflow-y-auto px-5 py-5 sm:px-7 sm:py-6"><h2 id="lead-capture-title" className="text-2xl font-bold tracking-tight text-slate-900">Need more from your schedule?</h2><p className="mt-2 text-sm leading-relaxed text-slate-600">{isWedding ? 'Need a polished timeline for your wedding or vendor team?' : 'We can help create a custom scheduling solution for your school, business, team, or personal workflow.'}</p><p className="mt-5 text-sm font-bold text-slate-800">What are you looking for?</p><div className="mt-3 grid gap-2 sm:grid-cols-2">{options.map((option) => <button key={option} type="button" onClick={() => select(option)} className="group flex min-h-12 items-center justify-between rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-left text-sm font-semibold text-slate-700 transition hover:border-indigo-300 hover:bg-indigo-50/70 hover:text-indigo-900">{option}<ChevronRight className="h-4 w-4 shrink-0 text-slate-400 transition group-hover:translate-x-0.5 group-hover:text-indigo-600" /></button>)}</div></div>}
+    {step === 2 && <form onSubmit={submit} className="lead-modal-step overflow-y-auto px-5 py-5 sm:px-7 sm:py-6" noValidate><button type="button" onClick={() => setStep(1)} className="text-xs font-bold text-indigo-700 hover:text-indigo-900 hover:underline">Change selection</button><h2 id="lead-capture-title" className="mt-3 text-2xl font-bold tracking-tight text-slate-900">We can help with that.</h2><p className="mt-2 text-sm text-slate-600">{isWedding && role === 'Couple' ? 'We can help make a done-for-you, polished custom timeline.' : isWedding ? 'We can help with branded timelines and templates for your business.' : 'Tell us a little about what you need.'}</p><label className="mt-5 block text-sm font-bold text-slate-700">Email address<div className="relative mt-1.5"><Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" /><input required name="email" type="email" autoComplete="email" onFocus={startForm} className="h-12 w-full rounded-xl border border-slate-300 py-3 pl-10 pr-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100" /></div></label><label className="mt-4 block text-sm font-bold text-slate-700">What do you need? <span className="font-normal text-slate-400">(optional)</span><textarea name="message" rows={4} className="mt-1.5 w-full resize-y rounded-xl border border-slate-300 p-3 text-slate-900 outline-none transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100" /></label><input name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" /><p className="mt-3 flex items-start gap-1.5 text-xs leading-relaxed text-slate-500"><ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-indigo-500" />By submitting, you agree that we may follow up about your request. See our <a href="/privacy-policy" className="text-indigo-700 underline">Privacy Policy</a>.</p>{status === 'error' && <p role="alert" className="mt-3 rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-700">{error}</p>}<button disabled={status === 'sending'} className="mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 font-bold text-white shadow-sm transition hover:bg-indigo-700 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-60"><Sparkles className="h-4 w-4" />{status === 'sending' ? 'Sending...' : 'Get in Touch'}</button></form>}
+    {step === 3 && <div className="lead-modal-step overflow-y-auto px-5 py-10 text-center sm:px-7 sm:py-12"><CheckCircle2 className="mx-auto h-12 w-12 text-emerald-500" /><h2 id="lead-capture-title" className="mt-4 text-2xl font-bold text-slate-900">Thanks - we will be in touch.</h2><p className="mt-2 text-sm text-slate-600">Your request has been sent to the FreeScheduleMaker team.</p><button type="button" onClick={onClose} className="mt-6 text-sm font-bold text-indigo-700 hover:text-indigo-900 hover:underline">Back to my schedule</button></div>}
+  </section></div>;
 }

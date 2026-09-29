@@ -11,6 +11,7 @@ import TemplateSelector from './TemplateSelector';
 import ExportButtons from './ExportButtons';
 import FeedbackBox from '../common/FeedbackBox';
 import LeadCaptureModal from '../common/LeadCaptureModal';
+import ExportSuccessCelebration from '../common/ExportSuccessCelebration';
 import { LEAD_CAPTURE_CONFIG } from '../../config/leadCapture';
 import { SCHEDULE_TEMPLATES } from '../../data/scheduleTemplates';
 import { Calendar, Plus, Settings, Sparkles } from 'lucide-react';
@@ -27,6 +28,7 @@ export default function ScheduleBuilder({ variant, fullScreen = false, presetId 
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isAddEventOpen, setIsAddEventOpen] = useState(false);
   const [isLeadCaptureOpen, setIsLeadCaptureOpen] = useState(false);
+  const [isExportCelebrationOpen, setIsExportCelebrationOpen] = useState(false);
   const [leadExportFormat, setLeadExportFormat] = useState<'png' | 'pdf'>('png');
   const builderStarted = useRef(false);
   const progressBuckets = useRef(new Set<string>());
@@ -69,14 +71,19 @@ export default function ScheduleBuilder({ variant, fullScreen = false, presetId 
     trackFunnelEvent('schedule_progress', funnelContext(), { event_count_bucket: bucket });
   }, [funnelContext]);
 
+  const showEligibleLeadCapture = useCallback(() => {
+    if (typeof window !== 'undefined' && !localStorage.getItem(LEAD_CAPTURE_CONFIG.storageKey)) setIsLeadCaptureOpen(true);
+  }, []);
+
   const showLeadCapture = (format: 'png' | 'pdf') => {
-    if (typeof window !== 'undefined' && !localStorage.getItem(LEAD_CAPTURE_CONFIG.storageKey)) {
-      setIsLeadCaptureOpen(true);
-      setLeadExportFormat(format);
-      // The modal event is sent only for sessions where the modal actually opens.
-      trackFunnelEvent('lead_modal_viewed', { ...funnelContext(), exportFormat: format }, { offer_segment: variant });
-    }
+    setLeadExportFormat(format);
+    if (typeof window === 'undefined') return;
+    const celebrationKey = 'fsm_export_celebration_seen_v1';
+    if (!localStorage.getItem(celebrationKey)) { localStorage.setItem(celebrationKey, 'seen'); setIsExportCelebrationOpen(true); return; }
+    showEligibleLeadCapture();
   };
+
+  const finishCelebration = useCallback(() => { setIsExportCelebrationOpen(false); showEligibleLeadCapture(); }, [showEligibleLeadCapture]);
 
   return (
     <div className={`w-full bg-slate-50 text-slate-900 ${fullScreen ? 'min-h-screen lg:h-screen flex overflow-hidden' : 'py-5 px-3 sm:py-8 sm:px-6 lg:px-8 max-w-7xl mx-auto'}`}>
@@ -222,6 +229,7 @@ export default function ScheduleBuilder({ variant, fullScreen = false, presetId 
           }}
         />
       )}
+      {isExportCelebrationOpen && <ExportSuccessCelebration onComplete={finishCelebration} onSkip={finishCelebration} />}
       {isLeadCaptureOpen && <LeadCaptureModal page={window.location.pathname} variant={variant} builderVariant={currentVariant} exportFormat={leadExportFormat} onClose={() => setIsLeadCaptureOpen(false)} />}
     </div>
   );

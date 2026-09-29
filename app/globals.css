@@ -24,3 +24,13 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@keyframes export-celebration-in { from { opacity: 0; transform: translateY(6px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes export-ring { from { opacity: .5; transform: scale(.78); } to { opacity: 0; transform: scale(2.25); } }
+@keyframes modal-enter { from { opacity: 0; transform: translateY(8px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.export-celebration-card { animation: export-celebration-in 220ms ease-out both; }
+.export-success-ring { position: absolute; inset: 0; border: 1px solid rgba(129, 140, 248, .72); border-radius: 9999px; animation: export-ring 850ms ease-out both; }
+.export-success-ring-two { animation-delay: 170ms; }
+.lead-modal-enter { animation: modal-enter 180ms ease-out both; }
+.lead-modal-step { animation: modal-enter 170ms ease-out both; }
+@media (prefers-reduced-motion: reduce) { .export-celebration-card, .export-success-ring, .lead-modal-enter, .lead-modal-step { animation: none; } .export-success-ring { opacity: .18; transform: scale(1.18); } }
