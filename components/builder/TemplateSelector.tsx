@@ -5,7 +5,12 @@ import { useScheduleStore } from '../../store/useScheduleStore';
 import { SCHEDULE_TEMPLATES, ScheduleTemplate } from '../../data/scheduleTemplates';
 import { Sparkles, HelpCircle, RefreshCw, Layers, X } from 'lucide-react';
 
-export default function TemplateSelector() {
+type TemplateSelectorProps = {
+  onTemplateSelected?: (template: ScheduleTemplate) => void;
+  onTemplateLoaded?: (template: ScheduleTemplate, mode: 'replace' | 'merge') => void;
+};
+
+export default function TemplateSelector({ onTemplateSelected, onTemplateLoaded }: TemplateSelectorProps) {
   const { currentVariant, events, setEvents } = useScheduleStore();
   const [selectedTemplate, setSelectedTemplate] = useState<ScheduleTemplate | null>(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -17,6 +22,7 @@ export default function TemplateSelector() {
     : SCHEDULE_TEMPLATES.filter((t) => t.variant === 'default');
 
   const handleTemplateClick = (template: ScheduleTemplate) => {
+    onTemplateSelected?.(template);
     if (events.length > 0) {
       setSelectedTemplate(template);
       setShowConfirmModal(true);
@@ -38,6 +44,7 @@ export default function TemplateSelector() {
     } else {
       setEvents([...events, ...formattedEvents]);
     }
+    onTemplateLoaded?.(template, mode);
     
     setSelectedTemplate(null);
     setShowConfirmModal(false);

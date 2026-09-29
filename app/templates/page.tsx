@@ -71,6 +71,8 @@ const TEMPLATES = [
 ];
 
 const PRINTABLE_TEMPLATES = [
+  { title: 'Printable Wedding Reception Timeline', description: 'Plan cocktails, dinner, speeches, dances, and your final send-off.', format: 'Best layout: evening reception schedule', href: '/wedding-reception-timeline-maker' },
+  { title: 'Printable Wedding Ceremony Timeline', description: 'Share an ordered ceremony schedule with your officiant and vendors.', format: 'Best layout: guest arrival through cocktails', href: '/wedding-ceremony-timeline-maker' },
   { title: 'Printable Wedding Day Timeline', description: 'Create a vendor-friendly wedding itinerary with a ceremony, photo, reception, and send-off plan.', format: 'Best layout: Saturday, 6:00 AM to midnight', href: '/wedding-day-timeline-maker' },
   {
     title: 'Printable Weekly Planner',

@@ -10,6 +10,7 @@ interface AddEventModalProps {
   onClose: () => void;
   initialDay?: string;
   initialTime?: string;
+  onEventAdded?: () => void;
 }
 
 const PALETTE_COLORS = [
@@ -25,7 +26,7 @@ const getAutoColor = (value: string) => {
   return PALETTE_COLORS[hash % PALETTE_COLORS.length];
 };
 
-export default function AddEventModal({ isOpen, onClose, initialDay, initialTime }: AddEventModalProps) {
+export default function AddEventModal({ isOpen, onClose, initialDay, initialTime, onEventAdded }: AddEventModalProps) {
   const { currentVariant, addEvent, settings } = useScheduleStore();
   const config = BUILDER_VARIANTS[currentVariant] || BUILDER_VARIANTS.default;
 
@@ -101,6 +102,7 @@ export default function AddEventModal({ isOpen, onClose, initialDay, initialTime
       notes: notes.trim() || undefined,
       variant: currentVariant,
     });
+    onEventAdded?.();
 
     // Reset Form fields
     setTitle('');

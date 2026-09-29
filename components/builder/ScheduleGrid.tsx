@@ -5,7 +5,12 @@ import { useScheduleStore } from '../../store/useScheduleStore';
 import EventCard from './EventCard';
 import AddEventModal from './AddEventModal';
 
-export default function ScheduleGrid() {
+type ScheduleGridProps = {
+  onEventAddStarted?: () => void;
+  onEventAdded?: () => void;
+};
+
+export default function ScheduleGrid({ onEventAddStarted, onEventAdded }: ScheduleGridProps) {
   const { events, settings } = useScheduleStore();
   const { visibleDays, startHour, endHour, clockType, lineSpacing } = settings;
 
@@ -14,6 +19,7 @@ export default function ScheduleGrid() {
   const [selectedSlot, setSelectedSlot] = useState({ day: '', time: '' });
 
   const handleSlotClick = (day: string, time: string) => {
+    onEventAddStarted?.();
     setSelectedSlot({ day, time });
     setIsModalOpen(true);
   };
@@ -113,6 +119,7 @@ export default function ScheduleGrid() {
           onClose={() => setIsModalOpen(false)} 
           initialDay={selectedSlot.day}
           initialTime={selectedSlot.time}
+          onEventAdded={onEventAdded}
         />
       )}
     </div>

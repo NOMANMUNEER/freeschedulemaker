@@ -93,6 +93,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     { url: `${baseUrl}/wedding-day-timeline-maker`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/wedding-reception-timeline-maker`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.75 },
+    { url: `${baseUrl}/wedding-ceremony-timeline-maker`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.75 },
     // Legal & Company Pages
     {
       url: `${baseUrl}/about`,

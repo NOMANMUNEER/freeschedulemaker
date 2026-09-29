@@ -32,7 +32,7 @@ export default function FeedbackBox() {
     const feedbackData = {
       isUseful,
       creationIntent,
-      featureSuggestion: featureSuggestion.trim(),
+      message: featureSuggestion.trim(),
       timestamp: new Date().toISOString(),
     };
 

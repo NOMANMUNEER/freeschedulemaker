@@ -20,6 +20,8 @@ export const metadata: Metadata = {
 };
 
 const PRIMARY_TOOLS = [
+  { title: 'Wedding Reception Timeline', href: '/wedding-reception-timeline-maker', description: 'Plan the order of events for cocktails, dinner, toasts, and dancing.' },
+  { title: 'Wedding Ceremony Timeline', href: '/wedding-ceremony-timeline-maker', description: 'Build a clear ceremony order from guest arrival through cocktail hour.' },
   { title: 'Wedding Day Timeline Template', href: '/wedding-day-timeline-maker', description: 'Start with an editable, printable wedding day schedule and share it with your vendors.' },
   {
     title: 'Free Schedule Maker',

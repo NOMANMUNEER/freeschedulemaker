@@ -4,23 +4,26 @@ import React, { useState } from 'react';
 import { useScheduleStore } from '../../store/useScheduleStore';
 import { exportScheduleToPDF, exportScheduleToPNG } from '../../lib/exportSchedule';
 import { Download, FileText, Loader2 } from 'lucide-react';
-import { logEvent } from '../../lib/analytics';
+import { eventCountBucket, trackFunnelEvent } from '../../lib/analytics';
 
-type ExportButtonsProps = { onSuccessfulExport?: () => void };
+type ExportButtonsProps = { onSuccessfulExport?: (format: 'png' | 'pdf') => void };
 
 export default function ExportButtons({ onSuccessfulExport }: ExportButtonsProps) {
-  const { clearSchedule, currentVariant } = useScheduleStore();
+  const { clearSchedule, currentVariant, events } = useScheduleStore();
   const [isExporting, setIsExporting] = useState(false);
   const [isPdfExporting, setIsPdfExporting] = useState(false);
 
   const handleDownload = async () => {
     setIsExporting(true);
-    logEvent('schedule_export_clicked', 'engagement', 'png', undefined, { tool_page: window.location.pathname });
+    const context = { builderVariant: currentVariant, exportFormat: 'png' as const };
+    trackFunnelEvent('export_started', context, { event_count_bucket: eventCountBucket(events.length) });
     try {
       const fileName = `${currentVariant}_schedule.png`;
       await exportScheduleToPNG('schedule-grid', fileName);
-      onSuccessfulExport?.();
+      trackFunnelEvent('export_completed', context, { event_count_bucket: eventCountBucket(events.length) });
+      onSuccessfulExport?.('png');
     } catch {
+      trackFunnelEvent('export_failed', context, { safe_error_type: 'render_or_download_failed' });
       alert('Failed to download schedule image. Please try again.');
     } finally {
       setIsExporting(false);
@@ -29,11 +32,14 @@ export default function ExportButtons({ onSuccessfulExport }: ExportButtonsProps
 
   const handleSavePDF = async () => {
     setIsPdfExporting(true);
-    logEvent('schedule_export_clicked', 'engagement', 'pdf', undefined, { tool_page: window.location.pathname });
+    const context = { builderVariant: currentVariant, exportFormat: 'pdf' as const };
+    trackFunnelEvent('export_started', context, { event_count_bucket: eventCountBucket(events.length) });
     try {
       await exportScheduleToPDF('schedule-grid', `${currentVariant.replace(/_/g, ' ')} schedule`);
-      onSuccessfulExport?.();
+      trackFunnelEvent('export_completed', context, { event_count_bucket: eventCountBucket(events.length) });
+      onSuccessfulExport?.('pdf');
     } catch {
+      trackFunnelEvent('export_failed', context, { safe_error_type: 'render_or_print_window_failed' });
       alert('Failed to prepare PDF. Please allow popups and try again.');
     } finally {
       setIsPdfExporting(false);

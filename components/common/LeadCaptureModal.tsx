@@ -3,57 +3,72 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { CheckCircle2, ChevronRight, X } from 'lucide-react';
 import { LEAD_CAPTURE_CONFIG, LEAD_INTENTS } from '../../config/leadCapture';
-import { logEvent } from '../../lib/analytics';
+import { trackFunnelEvent } from '../../lib/analytics';
 
 type LeadCaptureModalProps = {
   page: string;
   variant?: string;
+  builderVariant: string;
+  exportFormat: 'png' | 'pdf';
   onClose: () => void;
 };
 
-export default function LeadCaptureModal({ page, variant, onClose }: LeadCaptureModalProps) {
+export default function LeadCaptureModal({ page, variant, builderVariant, exportFormat, onClose }: LeadCaptureModalProps) {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [intent, setIntent] = useState('');
   const [status, setStatus] = useState<'idle' | 'sending' | 'error'>('idle');
   const [error, setError] = useState('');
   const [role, setRole] = useState('');
+  const [formStarted, setFormStarted] = useState(false);
   const isWedding = variant === 'wedding';
+  const context = { builderVariant, pagePath: page, intentSegment: variant, exportFormat };
 
   useEffect(() => {
-    logEvent('lead_popup_shown', 'lead_capture', page, undefined, { tool_page: page, source: LEAD_CAPTURE_CONFIG.source });
-    const closeOnEscape = (event: KeyboardEvent) => { if (event.key === 'Escape') handleClose(); };
+    const closeOnEscape = (event: KeyboardEvent) => { if (event.key === 'Escape') handleClose('escape'); };
     window.addEventListener('keydown', closeOnEscape);
     return () => window.removeEventListener('keydown', closeOnEscape);
   // The dialog intentionally registers this once when it opens.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function handleClose() {
+  function handleClose(method: 'close_button' | 'overlay' | 'escape' | 'other' = 'other') {
     localStorage.setItem(LEAD_CAPTURE_CONFIG.storageKey, 'dismissed');
-    logEvent('lead_popup_dismissed', 'lead_capture', page, undefined, { tool_page: page, intent: intent || 'not_selected' });
+    trackFunnelEvent('lead_modal_dismissed', context, { dismissal_method: method, selected_intent: intent || 'not_selected' });
     onClose();
   }
 
   function chooseIntent(selectedIntent: string) {
     setIntent(selectedIntent);
     setStep(2);
-    logEvent('lead_intent_selected', 'lead_capture', selectedIntent, undefined, { tool_page: page, intent: selectedIntent });
+    trackFunnelEvent('lead_intent_selected', { ...context, intentSegment: selectedIntent }, { selected_intent: selectedIntent });
   }
 
   function chooseRole(selectedRole: string) {
     setRole(selectedRole); setIntent(selectedRole); setStep(2);
-    logEvent('lead_role_selected', 'lead_capture', selectedRole, undefined, { tool_page: page, role: selectedRole });
+    trackFunnelEvent('lead_intent_selected', { ...context, intentSegment: selectedRole }, { selected_intent: selectedRole, selection_type: 'role' });
   }
 
   function handleFormFocus() {
-    logEvent('lead_form_started', 'lead_capture', intent, undefined, { tool_page: page, intent });
+    if (formStarted) return;
+    setFormStarted(true);
+    trackFunnelEvent('lead_form_started', { ...context, intentSegment: intent });
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
+    const email = typeof form.get('email') === 'string' ? form.get('email').trim() : '';
+    if (!email) {
+      trackFunnelEvent('lead_form_validation_error', { ...context, intentSegment: intent }, { field: 'email', validation_type: 'required' });
+      setStatus('error'); setError('Please enter your email address.'); return;
+    }
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      trackFunnelEvent('lead_form_validation_error', { ...context, intentSegment: intent }, { field: 'email', validation_type: 'format' });
+      setStatus('error'); setError('Please enter a valid email address.'); return;
+    }
     setStatus('sending');
     setError('');
+    trackFunnelEvent('lead_submission_started', { ...context, intentSegment: intent });
 
     try {
       const response = await fetch('/api/leads', {
@@ -61,7 +76,7 @@ export default function LeadCaptureModal({ page, variant, onClose }: LeadCapture
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           type: 'tool_lead',
-          email: form.get('email'),
+          email,
           message: form.get('message'),
           creationIntent: intent,
           role,
@@ -70,25 +85,30 @@ export default function LeadCaptureModal({ page, variant, onClose }: LeadCapture
           website: form.get('website'),
         }),
       });
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.error || 'Unable to send your request.');
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        const error = new Error('Unable to send your request.') as Error & { status?: number };
+        error.status = response.status;
+        throw error;
+      }
       localStorage.setItem(LEAD_CAPTURE_CONFIG.storageKey, 'submitted');
-      logEvent('lead_submitted', 'lead_capture', intent, undefined, { tool_page: page, intent, source: LEAD_CAPTURE_CONFIG.source });
+      trackFunnelEvent('lead_submitted', { ...context, intentSegment: intent }, { source: LEAD_CAPTURE_CONFIG.source });
       setStep(3);
     } catch (submissionError) {
       const message = submissionError instanceof Error ? submissionError.message : 'Unable to send your request.';
       setError(message);
       setStatus('error');
-      logEvent('lead_submission_failed', 'lead_capture', intent, undefined, { tool_page: page, intent, source: LEAD_CAPTURE_CONFIG.source });
+      const statusCode = submissionError && typeof submissionError === 'object' && 'status' in submissionError && typeof submissionError.status === 'number' ? submissionError.status : undefined;
+      trackFunnelEvent('lead_submission_failed', { ...context, intentSegment: intent }, { http_status: statusCode, safe_error_category: statusCode ? 'http_error' : 'network_or_response_error' });
     }
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-slate-950/45 p-4 sm:items-center" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) handleClose(); }}>
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-slate-950/45 p-4 sm:items-center" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) handleClose('overlay'); }}>
       <section role="dialog" aria-modal="true" aria-labelledby="lead-capture-title" className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
         <div className="flex items-start justify-between gap-4">
           <div className="flex gap-1" aria-label={`Step ${Math.min(step, 2)} of 2`}><span className="h-1.5 w-8 rounded-full bg-indigo-600" /><span className={`h-1.5 w-8 rounded-full ${step >= 2 ? 'bg-indigo-600' : 'bg-slate-200'}`} /></div>
-          <button type="button" onClick={handleClose} className="-mt-2 -mr-2 rounded-lg p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-800" aria-label="Close"><X className="h-5 w-5" /></button>
+          <button type="button" onClick={() => handleClose('close_button')} className="-mt-2 -mr-2 rounded-lg p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-800" aria-label="Close"><X className="h-5 w-5" /></button>
         </div>
 
         {step === 1 && <div className="pt-5">

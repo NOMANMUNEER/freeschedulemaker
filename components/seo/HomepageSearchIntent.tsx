@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 const SEARCH_INTENTS = [
+  { title: 'Wedding Reception and Ceremony Timelines', body: 'Use editable wedding reception and ceremony templates to coordinate every major moment of the day.', href: '/wedding-reception-timeline-maker', linkLabel: 'Plan a wedding reception' },
   { title: 'Wedding Day Timeline Template', body: 'Build a free, editable wedding day itinerary with a ready-made ceremony, portraits, dinner, and dancing schedule.', href: '/wedding-day-timeline-maker', linkLabel: 'Create a wedding timeline' },
   {
     title: 'Free Online Schedule Maker',

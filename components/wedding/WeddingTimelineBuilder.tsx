@@ -7,11 +7,11 @@ import { SCHEDULE_TEMPLATES } from '../../data/scheduleTemplates';
 
 const DEFAULT_TEMPLATE = 'wedding-4pm-first-look';
 
-export default function WeddingTimelineBuilder() {
+export default function WeddingTimelineBuilder({ templateIds, defaultTemplate = DEFAULT_TEMPLATE }: { templateIds?: string[]; defaultTemplate?: string }) {
   const params = useSearchParams();
   const requested = params.get('template');
-  const presetId = SCHEDULE_TEMPLATES.some((template) => template.id === requested && template.variant === 'wedding') ? requested! : DEFAULT_TEMPLATE;
-  const templates = SCHEDULE_TEMPLATES.filter((template) => template.variant === 'wedding');
+  const templates = SCHEDULE_TEMPLATES.filter((template) => template.variant === 'wedding' && (!templateIds || templateIds.includes(template.id)));
+  const presetId = templates.some((template) => template.id === requested) ? requested! : defaultTemplate;
 
   return <section id="builder" className="scroll-mt-6 py-8">
     <div className="mb-5"><h2 className="text-2xl font-bold text-slate-900">Choose a wedding timeline template</h2><p className="mt-2 text-sm text-slate-600">Every block is editable. Adjust it to your venue and vendors.</p></div>

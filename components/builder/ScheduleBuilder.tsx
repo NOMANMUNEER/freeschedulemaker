@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useScheduleStore } from '../../store/useScheduleStore';
 import { BuilderVariantId } from '../../types/schedule';
 import { BUILDER_VARIANTS } from '../../config/builderVariants';
@@ -14,6 +14,7 @@ import LeadCaptureModal from '../common/LeadCaptureModal';
 import { LEAD_CAPTURE_CONFIG } from '../../config/leadCapture';
 import { SCHEDULE_TEMPLATES } from '../../data/scheduleTemplates';
 import { Calendar, Plus, Settings, Sparkles } from 'lucide-react';
+import { eventCountBucket, trackFunnelEvent } from '../../lib/analytics';
 
 type ScheduleBuilderProps = {
   variant: BuilderVariantId;
@@ -26,6 +27,10 @@ export default function ScheduleBuilder({ variant, fullScreen = false, presetId 
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isAddEventOpen, setIsAddEventOpen] = useState(false);
   const [isLeadCaptureOpen, setIsLeadCaptureOpen] = useState(false);
+  const [leadExportFormat, setLeadExportFormat] = useState<'png' | 'pdf'>('png');
+  const builderStarted = useRef(false);
+  const progressBuckets = useRef(new Set<string>());
+  const loadedInitialPreset = useRef<string | null>(null);
 
   // Switch state variant on mount/change
   useEffect(() => {
@@ -36,15 +41,40 @@ export default function ScheduleBuilder({ variant, fullScreen = false, presetId 
     if (!presetId) return;
     const preset = SCHEDULE_TEMPLATES.find((template) => template.id === presetId && template.variant === variant);
     if (!preset) return;
+    if (loadedInitialPreset.current === `${variant}:${presetId}`) return;
+    loadedInitialPreset.current = `${variant}:${presetId}`;
     setEvents(preset.events.map((event) => ({ ...event, id: crypto.randomUUID(), variant })));
     if (preset.settings) updateSettings(preset.settings);
+    trackFunnelEvent('template_loaded', { builderVariant: variant, presetId, templateId: presetId }, { load_mode: 'initial_preset' });
   }, [presetId, setEvents, updateSettings, variant]);
 
   const config = BUILDER_VARIANTS[currentVariant] || BUILDER_VARIANTS.default;
 
-  const showLeadCapture = () => {
+  const funnelContext = useCallback(() => ({
+    builderVariant: currentVariant,
+    pagePath: typeof window === 'undefined' ? undefined : window.location.pathname,
+    presetId,
+  }), [currentVariant, presetId]);
+
+  const markBuilderStarted = useCallback(() => {
+    if (builderStarted.current) return;
+    builderStarted.current = true;
+    trackFunnelEvent('builder_started', funnelContext());
+  }, [funnelContext]);
+
+  const trackProgress = useCallback((eventCount: number) => {
+    const bucket = eventCountBucket(eventCount);
+    if (bucket === '0' || progressBuckets.current.has(bucket)) return;
+    progressBuckets.current.add(bucket);
+    trackFunnelEvent('schedule_progress', funnelContext(), { event_count_bucket: bucket });
+  }, [funnelContext]);
+
+  const showLeadCapture = (format: 'png' | 'pdf') => {
     if (typeof window !== 'undefined' && !localStorage.getItem(LEAD_CAPTURE_CONFIG.storageKey)) {
       setIsLeadCaptureOpen(true);
+      setLeadExportFormat(format);
+      // The modal event is sent only for sessions where the modal actually opens.
+      trackFunnelEvent('lead_modal_viewed', { ...funnelContext(), exportFormat: format }, { offer_segment: variant });
     }
   };
 
@@ -81,13 +111,22 @@ export default function ScheduleBuilder({ variant, fullScreen = false, presetId 
                 <Sparkles className="h-4 w-4 text-amber-500" />
                 <h3 className="text-xs font-bold text-slate-700 uppercase tracking-wider">Starter Templates</h3>
               </div>
-              <TemplateSelector />
+              <TemplateSelector
+                onTemplateSelected={(template) => {
+                  markBuilderStarted();
+                  trackFunnelEvent('template_selected', { ...funnelContext(), templateId: template.id }, { template_name: template.name });
+                }}
+                onTemplateLoaded={(template, mode) => {
+                  trackFunnelEvent('template_loaded', { ...funnelContext(), templateId: template.id }, { load_mode: mode });
+                  trackProgress(mode === 'replace' ? template.events.length : events.length + template.events.length);
+                }}
+              />
             </div>
 
             {/* Add Event Button */}
             <button 
               type="button"
-              onClick={() => setIsAddEventOpen(true)}
+              onClick={() => { markBuilderStarted(); trackFunnelEvent('event_add_started', funnelContext()); setIsAddEventOpen(true); }}
               className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-xl transition shadow-xs hover:shadow-md cursor-pointer"
             >
               <Plus className="h-4.5 w-4.5" /> {config.primaryActionLabel}
@@ -118,7 +157,11 @@ export default function ScheduleBuilder({ variant, fullScreen = false, presetId 
                         </div>
                         <button 
                           type="button"
-                          onClick={() => removeEvent(event.id)} 
+                          onClick={() => {
+                            removeEvent(event.id);
+                            markBuilderStarted();
+                            trackFunnelEvent('event_deleted', funnelContext(), { event_count: Math.max(0, events.length - 1) });
+                          }}
                           className="text-slate-400 hover:text-red-500 p-1.5 transition rounded-lg hover:bg-slate-100"
                         >
                           &times;
@@ -144,7 +187,15 @@ export default function ScheduleBuilder({ variant, fullScreen = false, presetId 
             Swipe the schedule left and right to view all days. Tap an empty time slot to add an event.
           </div>
           <div className="flex-1">
-            <ScheduleGrid />
+            <ScheduleGrid
+              onEventAddStarted={() => { markBuilderStarted(); trackFunnelEvent('event_add_started', funnelContext()); }}
+              onEventAdded={() => {
+                const eventCount = events.length + 1;
+                markBuilderStarted();
+                trackFunnelEvent('event_added', funnelContext(), { event_count: eventCount });
+                trackProgress(eventCount);
+              }}
+            />
           </div>
           
           {/* Feedback Box Render */}
@@ -161,9 +212,17 @@ export default function ScheduleBuilder({ variant, fullScreen = false, presetId 
         <SettingsModal isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
       )}
       {isAddEventOpen && (
-        <AddEventModal isOpen={isAddEventOpen} onClose={() => setIsAddEventOpen(false)} />
+        <AddEventModal
+          isOpen={isAddEventOpen}
+          onClose={() => setIsAddEventOpen(false)}
+          onEventAdded={() => {
+            const eventCount = events.length + 1;
+            trackFunnelEvent('event_added', funnelContext(), { event_count: eventCount });
+            trackProgress(eventCount);
+          }}
+        />
       )}
-      {isLeadCaptureOpen && <LeadCaptureModal page={window.location.pathname} variant={variant} onClose={() => setIsLeadCaptureOpen(false)} />}
+      {isLeadCaptureOpen && <LeadCaptureModal page={window.location.pathname} variant={variant} builderVariant={currentVariant} exportFormat={leadExportFormat} onClose={() => setIsLeadCaptureOpen(false)} />}
     </div>
   );
 }
