@@ -5,13 +5,14 @@ import Header from '../common/Header';
 import Footer from '../common/Footer';
 import ScheduleBuilder from '../builder/ScheduleBuilder';
 import RelatedTools from './RelatedTools';
+import type { BuilderVariantId } from '../../types/schedule';
 
 type SpecializedPageProps = {
   badge: string;
   heading: string;
   subheading: string;
   canonicalUrl?: string;
-  builderVariant: 'default' | 'weekly' | 'university' | 'rota' | 'employee' | 'shift' | 'revision';
+  builderVariant: BuilderVariantId;
   sections: {
     title: string;
     body: string;

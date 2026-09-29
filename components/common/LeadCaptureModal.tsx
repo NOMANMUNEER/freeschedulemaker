@@ -57,7 +57,8 @@ export default function LeadCaptureModal({ page, variant, builderVariant, export
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
-    const email = typeof form.get('email') === 'string' ? form.get('email').trim() : '';
+    const emailEntry = form.get('email');
+    const email = typeof emailEntry === 'string' ? emailEntry.trim() : '';
     if (!email) {
       trackFunnelEvent('lead_form_validation_error', { ...context, intentSegment: intent }, { field: 'email', validation_type: 'required' });
       setStatus('error'); setError('Please enter your email address.'); return;
